@@ -1,10 +1,8 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2010-10-28T13:34:20
+# Project created by QtCreator 2010-10-28T13:39:17
 #
 #-------------------------------------------------
-
-QT       += svg
 
 TARGET = Minesweeper
 TEMPLATE = app
