@@ -6,3 +6,4 @@
 *.o
 *.so
 Minesweeper
+Makefile
