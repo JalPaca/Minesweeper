@@ -7,11 +7,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->mineContainer->setSpacing(0);
+
+    
     for( int i = 0; i < 10; i++)
     {
         for( int j = 0; j < 10; j++)
         {
-            ui->mineContainer->addWidget(new QPushButton(""), i, j);
+            QPushButton* button = new QPushButton("");
+            button->setMaximumHeight(30);
+            button->setMaximumWidth(30);
+            ui->mineContainer->addWidget(button, i, j);
         }
     }
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Oct 30 15:34:53 2010
+** Created: Sat Oct 30 17:14:12 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -50,7 +50,10 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(311, 365);
+        MainWindow->resize(320, 381);
+        MainWindow->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"	border: 1px solid black;\n"
+"}"));
         action_Game = new QAction(MainWindow);
         action_Game->setObjectName(QString::fromUtf8("action_Game"));
         action_Exit = new QAction(MainWindow);
@@ -69,7 +72,7 @@ public:
         label->setGeometry(QRect(140, 10, 62, 17));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 40, 291, 251));
+        gridLayoutWidget->setGeometry(QRect(10, 40, 310, 272));
         mineContainer = new QGridLayout(gridLayoutWidget);
         mineContainer->setSpacing(0);
         mineContainer->setContentsMargins(11, 11, 11, 11);
@@ -81,7 +84,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 311, 23));
+        menuBar->setGeometry(QRect(0, 0, 320, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
