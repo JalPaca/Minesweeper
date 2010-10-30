@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Oct 30 17:14:12 2010
+** Created: Sat Oct 30 17:24:01 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -50,7 +50,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(320, 381);
+        MainWindow->resize(329, 372);
         MainWindow->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border: 1px solid black;\n"
 "}"));
@@ -80,11 +80,11 @@ public:
         mineContainer->setContentsMargins(0, 0, 0, 0);
         lcdNumber_2 = new QLCDNumber(centralWidget);
         lcdNumber_2->setObjectName(QString::fromUtf8("lcdNumber_2"));
-        lcdNumber_2->setGeometry(QRect(240, 10, 64, 23));
+        lcdNumber_2->setGeometry(QRect(260, 10, 64, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 320, 23));
+        menuBar->setGeometry(QRect(0, 0, 329, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);

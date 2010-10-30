@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->mineContainer->setSpacing(0);
-
     
     for( int i = 0; i < 10; i++)
     {
@@ -20,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->mineContainer->addWidget(button, i, j);
         }
     }
+
 }
 
 MainWindow::~MainWindow()
