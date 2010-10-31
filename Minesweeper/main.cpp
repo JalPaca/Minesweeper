@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
+#include "minesweeper.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,5 +9,7 @@ int main(int argc, char *argv[])
     
     MainWindow w;
     w.show();
+
+    Minesweeper board;
     return a.exec();
 }

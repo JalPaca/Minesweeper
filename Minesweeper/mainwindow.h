@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSignalMapper>
+#include "minesweeper.h"
 
 namespace Ui {
     class MainWindow;
@@ -18,6 +20,11 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    Minesweeper *game;
+    QSignalMapper *signalMapper;
+
+public slots:
+    void revealCell(QString);
 };
 
 #endif // MAINWINDOW_H
