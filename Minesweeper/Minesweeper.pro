@@ -5,7 +5,10 @@ TARGET = Minesweeper
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    minesweeper.cpp
+    minesweeper.cpp \
+    helpwindow.cpp
 HEADERS += mainwindow.h \
-    minesweeper.h
-FORMS += mainwindow.ui
+    minesweeper.h \
+    helpwindow.h
+FORMS += mainwindow.ui \
+    helpwindow.ui

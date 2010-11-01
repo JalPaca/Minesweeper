@@ -12,6 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->mineContainer->setSpacing(0);
 
+    //Connect help button
+    helpWindow = new HelpWindow();
+
+    connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
+
     game = new Minesweeper();
 
     //We will need to map the click to an object's coordinates
