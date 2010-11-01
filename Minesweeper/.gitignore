@@ -9,3 +9,5 @@ Minesweeper
 Makefile
 *.user
 Makefile*
+moc_*.cpp
+moc_*.h
