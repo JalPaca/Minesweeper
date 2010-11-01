@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
         for( int j = 0; j < 10; j++)
         {
             QPushButton* button = new QPushButton("");
+            button->setAttribute(Qt::WA_LayoutUsesWidgetRect);
             button->setMaximumHeight(30);
             button->setMaximumWidth(30);
             ui->mineContainer->addWidget(button, i, j);
