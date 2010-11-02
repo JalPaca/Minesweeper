@@ -6,9 +6,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     minesweeper.cpp \
-    helpwindow.cpp
+    helpwindow.cpp \
+    aboutwindow.cpp
 HEADERS += mainwindow.h \
     minesweeper.h \
-    helpwindow.h
+    helpwindow.h \
+    aboutwindow.h
 FORMS += mainwindow.ui \
-    helpwindow.ui
+    helpwindow.ui \
+    aboutwindow.ui

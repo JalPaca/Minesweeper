@@ -14,8 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Connect help button
     helpWindow = new HelpWindow();
+    aboutWindow =  new AboutWindow();
 
     connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
+    connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
 
     game = new Minesweeper();
 

@@ -21,8 +21,12 @@ void Minesweeper::generateBoard()
     //Generate ten mines and create its adjacent number list
     for( int i = 0; i < 10; i++)
     {
-        int row = qrand() % 10;
-        int column = qrand() % 10;
+        int row, column;
+
+        //Prevent generating mine on another mine
+            row = qrand() % 10;
+            column = qrand() % 10;
+
 
         mineBoard[row][column] = MINE; //Number 9 indiciates a mine
 

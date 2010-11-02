@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSignalMapper>
 #include "minesweeper.h"
+#include "aboutwindow.h"
 #include "helpwindow.h"
 
 namespace Ui {
@@ -24,6 +25,7 @@ private:
     Minesweeper *game;
     QSignalMapper *signalMapper;
     HelpWindow *helpWindow;
+    AboutWindow *aboutWindow;
 
 public slots:
     void revealCell(QString);
