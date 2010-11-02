@@ -6,7 +6,7 @@
 *.o
 *.so
 Minesweeper
-Makefile
+Makefile*
 *.user
 Makefile*
 moc_*.cpp
