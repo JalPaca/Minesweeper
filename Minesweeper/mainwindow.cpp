@@ -13,23 +13,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     hasLost = false;
-    minesClicked = 0;
+    cellsRevealed = 0;
     flagsFlagged = 0;
+    minesFlagged = 0;
     hasStarted = false;
     ui->setupUi(this);
     ui->mineContainer->setSpacing(0);
 
     currentTime = 0;
     timer = new QTimer();
-
+ //   ui->timerLabel->setText(QString::number(currentTime));
     //Connect help button
     helpWindow = new HelpWindow();
     aboutWindow =  new AboutWindow();
 
     connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
     connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
+    ui->lcdFlagCount->setDigitCount(2);
     game = new Minesweeper();
 
     //We will need to map the click to an object's coordinates
@@ -49,6 +52,13 @@ MainWindow::MainWindow(QWidget *parent) :
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
+
+            // for verifying the mine flagged value
+            /*if ( game->getValue(i,j) == 9){
+                button->setText(QString("!"));
+                button->setFlat(false);
+            }*/
+
             QObject::connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
             connect(button, SIGNAL(rightButtonClicked()), signalMapper2, SLOT(map()));
         }
@@ -62,17 +72,31 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::hasRightClicked(QString coordinates)
 {
         MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
+
         if ( !hasStarted ) timer->start(1000);
         hasStarted = true;
+
         if (! buttonPushed->isFlat() ) {
                 buttonPushed->setFlat(false);
-                if ( buttonPushed->text().isEmpty() ){
+                if ( buttonPushed->text().isEmpty() || buttonPushed->text().compare("!") == 0){
                         flagsFlagged++;
                         buttonPushed->setText("M");
+                        ui->lcdFlagCount->display(flagsFlagged);
+
+                        // find if flagged a mine
+                        QStringList results = coordinates.split(",");
+
+                        int row = results.at(0).toInt();
+                        int column = results.at(1).toInt();
+
+                        if ( game->getValue(row, column) == 9 ) {
+                            minesFlagged++;
+                        }
                 } else if ( buttonPushed->text().compare(QString("?")) == 0 ) {
                         buttonPushed->setText("");
                 } else if ( buttonPushed->text().compare(QString("M")) == 0 ) {
                         flagsFlagged--;
+                        ui->lcdFlagCount->display(flagsFlagged);
                         buttonPushed->setText("?");
                         // don't do anything!
                 } else {
@@ -84,13 +108,14 @@ void MainWindow::hasRightClicked(QString coordinates)
 
 void MainWindow::updateTimer() {
         currentTime++;
-        ui->timerLabel->setText(QString::number(currentTime));
+        ui->lcdTimer->display(currentTime);
+      //  ui->timerLabel->setText(QString::number(currentTime));
 }
 
 void MainWindow::revealCell(QString coordinates)
 {
     if (hasLost) return;
-    if (minesClicked == 90) {
+    if (cellsRevealed == 90 || (minesFlagged == 10 && flagsFlagged == 10)) {
         won();
         return;
     }
@@ -100,8 +125,6 @@ void MainWindow::revealCell(QString coordinates)
     if ( buttonPushed->text().compare(QString("M")) == 0 || buttonPushed->text().compare("?") == 0) {
             qDebug() << "flag clicked on...must return" << endl;
             return;
-            qDebug() << "shouldn't be here!!1" << endl;
-     //   buttonPushed->setAttribute();
     }
     if (buttonPushed->isFlat()) {
             qDebug() << "is flat; should be doing nothing!! " << endl;
@@ -120,25 +143,25 @@ void MainWindow::revealCell(QString coordinates)
         lost();
         return;
     }
-    minesClicked++;
+
     if ( !hasStarted ) timer->start(1000);
     hasStarted = true;
 
-
+    cellsRevealed++;
 }
 
 void MainWindow::lost() {
-    ui->timerLabel->setText("0");
+   // ui->timerLabel->setText("0");
     timer->stop();
-    qDebug() << "num flags clicked: " << flagsFlagged << endl;
-    qDebug() << "num mines clicked: " << minesClicked << endl;
-
+    qDebug() << "num flags flagged: " << flagsFlagged << endl;
+    qDebug() << "num cells revealed: " << cellsRevealed << endl;
+    qDebug() << "num mines flagged: " << minesFlagged << endl;
     hasLost = true;
 }
 
 void MainWindow::won()
 {
-    ui->timerLabel->setText("0");
+    //ui->timerLabel->setText("0");
     timer->stop();
 }
 
@@ -158,3 +181,8 @@ void MainWindow::changeEvent(QEvent *e)
         break;
     }
 }
+
+//void MainWindow::on_action_Reset_triggered()
+//{
+
+//}

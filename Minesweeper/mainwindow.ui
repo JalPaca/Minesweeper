@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>329</width>
-    <height>372</height>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,16 +19,6 @@
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLCDNumber" name="lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>64</width>
-      <height>23</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -57,17 +47,39 @@
      </property>
     </layout>
    </widget>
-   <widget class="QLabel" name="timerLabel">
+   <widget class="QLCDNumber" name="lcdTimer">
     <property name="geometry">
      <rect>
       <x>240</x>
       <y>10</y>
-      <width>67</width>
-      <height>17</height>
+      <width>64</width>
+      <height>23</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
+   </widget>
+   <widget class="QLCDNumber" name="lcdFlagCount">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>64</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>true</bool>
+    </property>
+    <property name="numDigits">
+     <number>4</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Filled</enum>
     </property>
    </widget>
   </widget>
@@ -84,6 +96,8 @@
     <property name="title">
      <string>&amp;Game</string>
     </property>
+    <addaction name="action_Reset"/>
+    <addaction name="separator"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -109,20 +123,40 @@
    <property name="text">
     <string>&amp;Game</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+G</string>
+   </property>
   </action>
   <action name="action_Exit">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+X</string>
    </property>
   </action>
   <action name="actionHelp">
    <property name="text">
     <string>Help</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+L</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+A</string>
+   </property>
+  </action>
+  <action name="action_Reset">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
@@ -142,6 +176,22 @@
     <hint type="destinationlabel">
      <x>299</x>
      <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Reset</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>update()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>187</y>
     </hint>
    </hints>
   </connection>

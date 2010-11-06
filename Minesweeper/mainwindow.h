@@ -32,7 +32,8 @@ private:
     int currentTime;
     bool hasStarted;
     bool hasLost;
-    int minesClicked;
+    int cellsRevealed;
+    int minesFlagged;
     int flagsFlagged;
     void lost();
     void won();
