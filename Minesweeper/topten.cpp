@@ -17,7 +17,7 @@ TopTen::TopTen(QWidget *parent) :
 
 void TopTen::getTopTenScores()
 {
-    QString topScores = "<ul>";
+    QString topScores = "<ol>";
     QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE");
 
     db.setDatabaseName("scores.sqlite");
@@ -40,7 +40,7 @@ void TopTen::getTopTenScores()
     for( int r=0; sql.next(); r++ )
               topScores += "<li>" + sql.value(0).toString() + " - " + sql.value(1).toString() +"</li>";
 
-    topScores += "</ul>";
+    topScores += "</ol>";
     ui->topTenList->setText(topScores);
 }
 
