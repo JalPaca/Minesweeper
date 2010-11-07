@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Nov 6 19:33:17 2010
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Sat Nov 6 22:56:45 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -17,10 +17,10 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLCDNumber>
-#include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
@@ -35,12 +35,13 @@ public:
     QAction *actionHelp;
     QAction *actionAbout;
     QAction *action_Reset;
+    QAction *actionTop_Ten;
     QWidget *centralWidget;
-    QLabel *label;
     QWidget *gridLayoutWidget;
     QGridLayout *mineContainer;
     QLCDNumber *lcdTimer;
     QLCDNumber *lcdFlagCount;
+    QPushButton *smileyFace;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Help;
@@ -66,11 +67,10 @@ public:
         action_Reset = new QAction(MainWindow);
         action_Reset->setObjectName(QString::fromUtf8("action_Reset"));
         action_Reset->setIconVisibleInMenu(false);
+        actionTop_Ten = new QAction(MainWindow);
+        actionTop_Ten->setObjectName(QString::fromUtf8("actionTop_Ten"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(140, 10, 62, 17));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
         gridLayoutWidget->setGeometry(QRect(10, 40, 310, 272));
@@ -90,10 +90,13 @@ public:
         lcdFlagCount->setSmallDecimalPoint(true);
         lcdFlagCount->setNumDigits(4);
         lcdFlagCount->setSegmentStyle(QLCDNumber::Filled);
+        smileyFace = new QPushButton(centralWidget);
+        smileyFace->setObjectName(QString::fromUtf8("smileyFace"));
+        smileyFace->setGeometry(QRect(120, 0, 93, 27));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 25));
+        menuBar->setGeometry(QRect(0, 0, 329, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
@@ -110,6 +113,7 @@ public:
         menuBar->addAction(menu_Help->menuAction());
         menu_File->addAction(action_Reset);
         menu_File->addSeparator();
+        menu_File->addAction(actionTop_Ten);
         menu_File->addAction(action_Exit);
         menu_Help->addAction(actionHelp);
         menu_Help->addAction(actionAbout);
@@ -131,8 +135,9 @@ public:
         actionHelp->setShortcut(QApplication::translate("MainWindow", "Shift+L", 0, QApplication::UnicodeUTF8));
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
         actionAbout->setShortcut(QApplication::translate("MainWindow", "Shift+A", 0, QApplication::UnicodeUTF8));
-        action_Reset->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", ":)", 0, QApplication::UnicodeUTF8));
+        action_Reset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
+        actionTop_Ten->setText(QApplication::translate("MainWindow", "Top Ten", 0, QApplication::UnicodeUTF8));
+        smileyFace->setText(QApplication::translate("MainWindow", ":)", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
         menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

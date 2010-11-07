@@ -43,6 +43,8 @@ private slots:
     void updateTimer();
     void hasRightClicked(QString);
     void reset();
+    void handleSmileyFace();
+    void handleTopTen();
     //void revealAll(QString);
 
 public slots:

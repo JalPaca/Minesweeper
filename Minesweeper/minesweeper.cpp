@@ -18,11 +18,7 @@ Minesweeper::Minesweeper()
 
 Minesweeper::~Minesweeper()
 {
-    for (int i = 0; i < 10; i++) {
-        delete []mineBoard[i];
-    }
-
-    delete []mineBoard;
+    //delete []mineBoard;
 }
 
 void Minesweeper::generateBoard()
