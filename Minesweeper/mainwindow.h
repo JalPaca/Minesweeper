@@ -38,6 +38,7 @@ private:
     int flagsFlagged;
     void lost();
     void won();
+    void clearing (int,int);
     void clearing(QString);
 
 private slots:

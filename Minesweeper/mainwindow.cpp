@@ -149,12 +149,19 @@ void MainWindow::revealCell(QString coordinates)
 
     if ( !hasStarted ) timer->start(1000);
     hasStarted = true;
-<<<<<<< HEAD
 
     cellsRevealed++;
 
     //!!!!ahh baddd recursive function call for clearing
-   // clearing(coordinates);
+    clearing(coordinates);
+}
+
+void MainWindow::clearing(int adjRow, int adjCol) {
+    if ( ( adjRow > -1 && adjRow < 10 ) && ( adjCol > -1 && adjRow < 10 ) ) {
+        if ( ! game->isMine(adjRow, adjCol) ) {
+            revealCell(QString::number(adjRow)+","+QString::number(adjCol));
+        }
+    }
 }
 
 void MainWindow::clearing (QString originalCoordinates) {
@@ -163,30 +170,14 @@ void MainWindow::clearing (QString originalCoordinates) {
     //results.operator <<()
     int row = results.at(0).toInt();
     int column = results.at(1).toInt();
-
-    if (! game->isMine(row-1, column-1) && !((row - 1) < 0 || (row - 1) > 9 || (column - 1) < 0 || (column -1) > 9) ) {
-        revealCell(QString::number(row-1)+","+QString::number(column-1));
-    }
-    if (! game->isMine(row-1, column) && !((row - 1) < 0 || (row - 1) > 9 || (column) < 0 || (column) > 9) ) {
-        revealCell(QString::number(row-1)+","+QString::number(column));
-    } if (! game->isMine(row-1, column+1) && !((row - 1) < 0 || (row - 1) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
-        revealCell(QString::number(row-1)+","+QString::number(column+1));
-    } if (! game->isMine(row, column-1) && !((row) < 0 || (row) > 9 || (column - 1) < 0 || (column - 1) > 9) ) {
-        revealCell(QString::number(row)+","+QString::number(column-1));
-    } if (! game->isMine(row, column+1) && !((row) < 0 || (row) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
-        revealCell(QString::number(row)+","+QString::number(column+1));
-    } if (! game->isMine(row+1, column-1) && !((row + 1) < 0 || (row + 1) > 9 || (column - 1) < 0 || (column - 1) > 9) ) {
-        revealCell(QString::number(row+1)+","+QString::number(column-1));
-    } if (! game->isMine(row+1, column) && !((row + 1) < 0 || (row + 1) > 9 || (column) < 0 || (column) > 9) ) {
-        revealCell(QString::number(row+1)+","+QString::number(column));
-    } if (! game->isMine(row+1, column+1) && !((row + 1) < 0 || (row + 1) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
-        revealCell(QString::number(row+1)+","+QString::number(column+1));
-    } {
-        qDebug() << "Adjacent mine not found!" << endl;
-        return;
-    }
-=======
->>>>>>> 3465367d24f17f6f5c1422ee903661ada63c2ba5
+    clearing (row - 1, column - 1);
+    clearing(row -1, column);
+    clearing(row - 1, column + 1);
+    clearing(row, column - 1);
+    clearing(row, column + 1);
+    clearing(row + 1, column - 1);
+    clearing(row + 1, column);
+    clearing(row + 1, column + 1);
 }
 
 void MainWindow::lost() {
