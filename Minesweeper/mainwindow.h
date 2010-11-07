@@ -18,6 +18,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -37,7 +38,7 @@ private:
     int flagsFlagged;
     void lost();
     void won();
-
+    void clearing(QString);
 
 private slots:
     void updateTimer();
@@ -46,7 +47,9 @@ private slots:
     //void revealAll(QString);
 
 public slots:
+
     void revealCell(QString);
+
 };
 
 #endif // MAINWINDOW_H

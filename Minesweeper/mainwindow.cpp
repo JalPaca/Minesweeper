@@ -145,6 +145,39 @@ void MainWindow::revealCell(QString coordinates)
     hasStarted = true;
 
     cellsRevealed++;
+
+    //!!!!ahh baddd recursive function call for clearing
+   // clearing(coordinates);
+}
+
+void MainWindow::clearing (QString originalCoordinates) {
+    QStringList results = originalCoordinates.split(",");
+    qDebug() << "Enter recursive call with coordinates: " << results;
+    //results.operator <<()
+    int row = results.at(0).toInt();
+    int column = results.at(1).toInt();
+
+    if (! game->isMine(row-1, column-1) && !((row - 1) < 0 || (row - 1) > 9 || (column - 1) < 0 || (column -1) > 9) ) {
+        revealCell(QString::number(row-1)+","+QString::number(column-1));
+    }
+    if (! game->isMine(row-1, column) && !((row - 1) < 0 || (row - 1) > 9 || (column) < 0 || (column) > 9) ) {
+        revealCell(QString::number(row-1)+","+QString::number(column));
+    } if (! game->isMine(row-1, column+1) && !((row - 1) < 0 || (row - 1) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
+        revealCell(QString::number(row-1)+","+QString::number(column+1));
+    } if (! game->isMine(row, column-1) && !((row) < 0 || (row) > 9 || (column - 1) < 0 || (column - 1) > 9) ) {
+        revealCell(QString::number(row)+","+QString::number(column-1));
+    } if (! game->isMine(row, column+1) && !((row) < 0 || (row) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
+        revealCell(QString::number(row)+","+QString::number(column+1));
+    } if (! game->isMine(row+1, column-1) && !((row + 1) < 0 || (row + 1) > 9 || (column - 1) < 0 || (column - 1) > 9) ) {
+        revealCell(QString::number(row+1)+","+QString::number(column-1));
+    } if (! game->isMine(row+1, column) && !((row + 1) < 0 || (row + 1) > 9 || (column) < 0 || (column) > 9) ) {
+        revealCell(QString::number(row+1)+","+QString::number(column));
+    } if (! game->isMine(row+1, column+1) && !((row + 1) < 0 || (row + 1) > 9 || (column + 1) < 0 || (column + 1) > 9) ) {
+        revealCell(QString::number(row+1)+","+QString::number(column+1));
+    } {
+        qDebug() << "Adjacent mine not found!" << endl;
+        return;
+    }
 }
 
 void MainWindow::lost() {
