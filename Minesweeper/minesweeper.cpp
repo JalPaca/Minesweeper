@@ -24,9 +24,11 @@ void Minesweeper::generateBoard()
         int row, column;
 
         //Prevent generating mine on another mine
+        do
+        {
             row = qrand() % 10;
             column = qrand() % 10;
-
+        }while (mineBoard[row][column] == MINE);
 
         mineBoard[row][column] = MINE; //Number 9 indiciates a mine
 
