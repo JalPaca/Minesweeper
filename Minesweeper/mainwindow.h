@@ -42,6 +42,7 @@ private:
 private slots:
     void updateTimer();
     void hasRightClicked(QString);
+    void reset();
     //void revealAll(QString);
 
 public slots:

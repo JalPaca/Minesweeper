@@ -17,22 +17,24 @@ MainWindow::MainWindow(QWidget *parent) :
     flagsFlagged = 0;
     minesFlagged = 0;
     hasStarted = false;
-    ui->setupUi(this);
-    ui->mineContainer->setSpacing(0);
-
     currentTime = 0;
+
+    ui->setupUi(this);
+
+    ui->mineContainer->setSpacing(0);
     timer = new QTimer();
- //   ui->timerLabel->setText(QString::number(currentTime));
+    ui->lcdFlagCount->setDigitCount(2);
+
     //Connect help button
     helpWindow = new HelpWindow();
     aboutWindow =  new AboutWindow();
 
     connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
     connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
-
+    connect(ui->action_Reset, SIGNAL(triggered()), this, SLOT(reset()));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
-    ui->lcdFlagCount->setDigitCount(2);
+
     game = new Minesweeper();
 
     //We will need to map the click to an object's coordinates
@@ -41,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //MineSweeperButton
     for( int i = 0; i < 10; i++)
     {
-        for( int j = 0; j < 10; j++)
+        for( int j = 0; j < 10; j++ )
         {
             MineSweeperButton* button = new MineSweeperButton("");
             button->setAttribute(Qt::WA_LayoutUsesWidgetRect);
@@ -52,12 +54,6 @@ MainWindow::MainWindow(QWidget *parent) :
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
-
-            // for verifying the mine flagged value
-            /*if ( game->getValue(i,j) == 9){
-                button->setText(QString("!"));
-                button->setFlat(false);
-            }*/
 
             QObject::connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
             connect(button, SIGNAL(rightButtonClicked()), signalMapper2, SLOT(map()));
@@ -71,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::hasRightClicked(QString coordinates)
 {
+    if (hasLost) return;
         MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
         if ( !hasStarted ) timer->start(1000);
@@ -157,6 +154,33 @@ void MainWindow::lost() {
     qDebug() << "num cells revealed: " << cellsRevealed << endl;
     qDebug() << "num mines flagged: " << minesFlagged << endl;
     hasLost = true;
+}
+
+void MainWindow::reset() {
+    hasLost = false;
+    cellsRevealed = 0;
+    flagsFlagged = 0;
+    minesFlagged = 0;
+    hasStarted = false;
+    currentTime = 0;
+
+    ui->lcdFlagCount->display(flagsFlagged);
+    ui->lcdTimer->display(currentTime);
+
+//    this->game;
+    game = new Minesweeper();
+
+    for( int i = 0; i < 10; i++)
+    {
+        for( int j = 0; j < 10; j++ )
+        {
+            QString coordinates = QString::number(i)+","+QString::number(j);
+            MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
+            button->setText("");
+            button->setFlat(false);
+        }
+
+    }
 }
 
 void MainWindow::won()
