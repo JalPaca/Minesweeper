@@ -6,6 +6,7 @@ class Minesweeper
 {
 public:
     Minesweeper();
+    ~Minesweeper();
     bool isMine(int, int);
     int getValue(int, int);
 private:

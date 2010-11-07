@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Nov 1 10:48:25 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Sat Nov 6 19:33:17 2010
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -34,12 +34,13 @@ public:
     QAction *action_Exit;
     QAction *actionHelp;
     QAction *actionAbout;
+    QAction *action_Reset;
     QWidget *centralWidget;
-    QLCDNumber *lcdNumber;
     QLabel *label;
     QWidget *gridLayoutWidget;
     QGridLayout *mineContainer;
-    QLCDNumber *lcdNumber_2;
+    QLCDNumber *lcdTimer;
+    QLCDNumber *lcdFlagCount;
     QMenuBar *menuBar;
     QMenu *menu_File;
     QMenu *menu_Help;
@@ -50,7 +51,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(329, 372);
+        MainWindow->resize(329, 376);
         MainWindow->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border: 1px solid black;\n"
 "}"));
@@ -62,11 +63,11 @@ public:
         actionHelp->setObjectName(QString::fromUtf8("actionHelp"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
+        action_Reset = new QAction(MainWindow);
+        action_Reset->setObjectName(QString::fromUtf8("action_Reset"));
+        action_Reset->setIconVisibleInMenu(false);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        lcdNumber = new QLCDNumber(centralWidget);
-        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
-        lcdNumber->setGeometry(QRect(10, 10, 64, 23));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(140, 10, 62, 17));
@@ -78,13 +79,21 @@ public:
         mineContainer->setContentsMargins(11, 11, 11, 11);
         mineContainer->setObjectName(QString::fromUtf8("mineContainer"));
         mineContainer->setContentsMargins(0, 0, 0, 0);
-        lcdNumber_2 = new QLCDNumber(centralWidget);
-        lcdNumber_2->setObjectName(QString::fromUtf8("lcdNumber_2"));
-        lcdNumber_2->setGeometry(QRect(260, 10, 64, 23));
+        lcdTimer = new QLCDNumber(centralWidget);
+        lcdTimer->setObjectName(QString::fromUtf8("lcdTimer"));
+        lcdTimer->setGeometry(QRect(240, 10, 64, 23));
+        lcdFlagCount = new QLCDNumber(centralWidget);
+        lcdFlagCount->setObjectName(QString::fromUtf8("lcdFlagCount"));
+        lcdFlagCount->setEnabled(true);
+        lcdFlagCount->setGeometry(QRect(30, 10, 64, 23));
+        lcdFlagCount->setAutoFillBackground(false);
+        lcdFlagCount->setSmallDecimalPoint(true);
+        lcdFlagCount->setNumDigits(4);
+        lcdFlagCount->setSegmentStyle(QLCDNumber::Filled);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 23));
+        menuBar->setGeometry(QRect(0, 0, 329, 25));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
@@ -99,6 +108,8 @@ public:
 
         menuBar->addAction(menu_File->menuAction());
         menuBar->addAction(menu_Help->menuAction());
+        menu_File->addAction(action_Reset);
+        menu_File->addSeparator();
         menu_File->addAction(action_Exit);
         menu_Help->addAction(actionHelp);
         menu_Help->addAction(actionAbout);
@@ -113,9 +124,14 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MineSweeper", 0, QApplication::UnicodeUTF8));
         action_Game->setText(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
+        action_Game->setShortcut(QApplication::translate("MainWindow", "Shift+G", 0, QApplication::UnicodeUTF8));
         action_Exit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));
+        action_Exit->setShortcut(QApplication::translate("MainWindow", "Shift+X", 0, QApplication::UnicodeUTF8));
         actionHelp->setText(QApplication::translate("MainWindow", "Help", 0, QApplication::UnicodeUTF8));
+        actionHelp->setShortcut(QApplication::translate("MainWindow", "Shift+L", 0, QApplication::UnicodeUTF8));
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
+        actionAbout->setShortcut(QApplication::translate("MainWindow", "Shift+A", 0, QApplication::UnicodeUTF8));
+        action_Reset->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", ":)", 0, QApplication::UnicodeUTF8));
         menu_File->setTitle(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
         menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0, QApplication::UnicodeUTF8));

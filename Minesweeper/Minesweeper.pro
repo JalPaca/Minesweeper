@@ -7,11 +7,13 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     minesweeper.cpp \
     helpwindow.cpp \
-    aboutwindow.cpp
+    aboutwindow.cpp \
+    minesweeperbutton.cpp
 HEADERS += mainwindow.h \
     minesweeper.h \
     helpwindow.h \
-    aboutwindow.h
+    aboutwindow.h \
+    minesweeperbutton.h
 FORMS += mainwindow.ui \
     helpwindow.ui \
     aboutwindow.ui

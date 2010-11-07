@@ -16,6 +16,15 @@ Minesweeper::Minesweeper()
     generateBoard();
 }
 
+Minesweeper::~Minesweeper()
+{
+    for (int i = 0; i < 10; i++) {
+        delete []mineBoard[i];
+    }
+
+    delete []mineBoard;
+}
+
 void Minesweeper::generateBoard()
 {
     //Generate ten mines and create its adjacent number list

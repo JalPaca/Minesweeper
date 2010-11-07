@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <iostream>
 #include <QMainWindow>
 #include <QSignalMapper>
 #include "minesweeper.h"
@@ -24,8 +25,25 @@ private:
     Ui::MainWindow *ui;
     Minesweeper *game;
     QSignalMapper *signalMapper;
+    QSignalMapper *signalMapper2;
     HelpWindow *helpWindow;
     AboutWindow *aboutWindow;
+    QTimer *timer;
+    int currentTime;
+    bool hasStarted;
+    bool hasLost;
+    int cellsRevealed;
+    int minesFlagged;
+    int flagsFlagged;
+    void lost();
+    void won();
+
+
+private slots:
+    void updateTimer();
+    void hasRightClicked(QString);
+    void reset();
+    //void revealAll(QString);
 
 public slots:
     void revealCell(QString);
