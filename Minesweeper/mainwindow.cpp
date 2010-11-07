@@ -6,6 +6,8 @@
 #include <QtDebug>
 #include "minesweeper.h"
 #include "minesweeperbutton.h"
+#include "savescore.h"
+#include "topten.h"
 #include <QTimer>
 #include <iostream>
 MainWindow::MainWindow(QWidget *parent) :
@@ -32,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
     connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
     connect(ui->action_Reset, SIGNAL(triggered()), this, SLOT(reset()));
+    connect(ui->smileyFace, SIGNAL(clicked()), this, SLOT(handleSmileyFace()));
+    connect(ui->actionTop_Ten, SIGNAL(triggered()), this, SLOT(handleTopTen()));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
@@ -52,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
             ui->mineContainer->addWidget(button, i, j);
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
+            //button->setText(QString::number(game->getValue(i, j)));
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
 
@@ -111,12 +116,13 @@ void MainWindow::updateTimer() {
 
 void MainWindow::revealCell(QString coordinates)
 {
+    cellsRevealed++;
     if (hasLost) return;
     if (cellsRevealed == 90 || (minesFlagged == 10 && flagsFlagged == 10)) {
         won();
         return;
     }
-
+    qDebug() << "Cells revealed: " << cellsRevealed;
     QStringList results = coordinates.split(",");
     MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
     if ( buttonPushed->text().compare(QString("M")) == 0 || buttonPushed->text().compare("?") == 0) {
@@ -143,6 +149,7 @@ void MainWindow::revealCell(QString coordinates)
 
     if ( !hasStarted ) timer->start(1000);
     hasStarted = true;
+<<<<<<< HEAD
 
     cellsRevealed++;
 
@@ -178,6 +185,8 @@ void MainWindow::clearing (QString originalCoordinates) {
         qDebug() << "Adjacent mine not found!" << endl;
         return;
     }
+=======
+>>>>>>> 3465367d24f17f6f5c1422ee903661ada63c2ba5
 }
 
 void MainWindow::lost() {
@@ -220,6 +229,21 @@ void MainWindow::won()
 {
     //ui->timerLabel->setText("0");
     timer->stop();
+
+    SaveScore* scoreScreen = new SaveScore(this->currentTime);
+
+    scoreScreen->show();
+}
+
+void MainWindow::handleSmileyFace()
+{
+    won();
+}
+
+void MainWindow::handleTopTen()
+{
+    TopTen* scores = new TopTen();
+    scores->show();
 }
 
 MainWindow::~MainWindow()
