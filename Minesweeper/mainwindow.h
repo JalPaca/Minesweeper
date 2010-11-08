@@ -35,7 +35,7 @@ private:
     int flagsFlagged;
     void lost();
     void won();
-    void clear(int, int);
+    void clear(int, int, bool);
 
 private slots:
     void updateTimer();

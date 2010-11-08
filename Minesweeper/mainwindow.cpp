@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
             ui->mineContainer->addWidget(button, i, j);
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
-            button->setText(QString::number(game->getValue(i, j)));     // for debugging
+            //button->setText(QString::number(game->getValue(i, j)));     // for debugging
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
 
@@ -140,7 +140,11 @@ void MainWindow::revealCell(QString coordinates)
     int column = results.at(1).toInt();
 
     //!!!!ahh baddd recursive function call for clearing
-    clear(row, column);
+    if ( game->getValue (row, column) == 0 ) {
+        cellsRevealed--;
+        clear(row, column, true);
+    }
+
     buttonPushed->setFlat(true);    // if revealed, set button flat
     buttonPushed->setDisabled(true);    // according to Prof.'s specs
 
@@ -158,44 +162,49 @@ void MainWindow::revealCell(QString coordinates)
     hasStarted = true;
 }
 
-void MainWindow::clear(int row, int column)
+void MainWindow::clear(int row, int column, bool allowedClear)
 {
     QString coordinates = QString::number(row) + "," + QString::number(column);
     qDebug() << "I am checking " + QString::number(row) + "col: " + QString::number(column);
     MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
-        if ( game->getValue(row, column) == 0 && buttonPushed->isFlat () == false)
+        if ( buttonPushed->isFlat () == false && game->getValue (row, column) != 9 && allowedClear == true)
         {
-            buttonPushed->setText ("0");
+            buttonPushed->setText (QString::number (game->getValue (row, column)));
             buttonPushed->setFlat (true);
             buttonPushed->setDisabled (true);
             cellsRevealed++;
 
+            if ( game->getValue (row, column) == 0)
+                allowedClear = true;
+            else
+                allowedClear = false;
+
             //Top left
             if ( (row-1) != -1 && (column -1) != -1)
-                clear(row-1, column-1);
+                clear(row-1, column-1, allowedClear);
             //Top center
             if ( (row-1) != -1)
-                clear(row-1, column);
+                clear(row-1, column, allowedClear);
             //Top right
             if ( (row-1) != -1 && (column + 1) != 10)
-                clear(row-1, column+1);
+                clear(row-1, column+1, allowedClear);
             //Left
             if ( (column -1) != -1)
-                clear(row, column-1);
+                clear(row, column-1, allowedClear);
             //Right
             if ( (column + 1) != 10)
-                clear(row, column+1);
+                clear(row, column+1, allowedClear);
             //Bottom left
             if ( (row+1) != 10 && (column -1) != -1)
-                clear(row+1, column-1);
+                clear(row+1, column-1, allowedClear);
             //Bottom center
             if ( (row+1) != 10)
-                clear(row+1, column);
+                clear(row+1, column, allowedClear);
             //Bottom right
             if ( (row+1) != 10 && (column+1) != 10)
             {
-                clear(row+1, column+1);
+                clear(row+1, column+1, allowedClear);
             }
         }
         else
