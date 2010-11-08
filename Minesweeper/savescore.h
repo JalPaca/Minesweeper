@@ -2,6 +2,7 @@
 #define SAVESCORE_H
 
 #include <QDialog>
+#include <QSqlDatabase>
 
 namespace Ui {
     class SaveScore;

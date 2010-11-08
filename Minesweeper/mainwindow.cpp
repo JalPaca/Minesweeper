@@ -8,13 +8,15 @@
 #include "minesweeperbutton.h"
 #include "savescore.h"
 #include "topten.h"
+#include "aboutwindow.h"
+#include "helpwindow.h"
 #include <QTimer>
 #include <iostream>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    hasLost = false;
+    hasFinished = false;
     cellsRevealed = 0;
     flagsFlagged = 0;
     minesFlagged = 0;
@@ -27,12 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer();
     ui->lcdFlagCount->setDigitCount(2);
 
-    //Connect help button
-    helpWindow = new HelpWindow();
-    aboutWindow =  new AboutWindow();
-
-    connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
-    connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
+    connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(handleHelpButton()));
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(handleAboutButton()));
     connect(ui->action_Reset, SIGNAL(triggered()), this, SLOT(reset()));
     connect(ui->smileyFace, SIGNAL(clicked()), this, SLOT(handleSmileyFace()));
     connect(ui->actionTop_Ten, SIGNAL(triggered()), this, SLOT(handleTopTen()));
@@ -56,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
             ui->mineContainer->addWidget(button, i, j);
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
-            //button->setText(QString::number(game->getValue(i, j)));
+            button->setText(QString::number(game->getValue(i, j)));     // for debugging
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
 
@@ -72,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::hasRightClicked(QString coordinates)
 {
-    if (hasLost) return;
+    if (hasFinished) return;
         MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
         if ( !hasStarted ) timer->start(1000);
@@ -116,8 +114,9 @@ void MainWindow::updateTimer() {
 
 void MainWindow::revealCell(QString coordinates)
 {
-    cellsRevealed++;
-    if (hasLost) return;
+    if (hasFinished) return;
+    else cellsRevealed++;
+    qDebug() << "Cells: " << cellsRevealed;
     if (cellsRevealed == 90) {
         won();
         return;
@@ -127,69 +126,83 @@ void MainWindow::revealCell(QString coordinates)
     MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
     if ( buttonPushed->text().compare(QString("M")) == 0 || buttonPushed->text().compare("?") == 0) {
             qDebug() << "flag clicked on...must return" << endl;
+            cellsRevealed--;
             return;
     }
     if (buttonPushed->isFlat()) {
             qDebug() << "is flat; should be doing nothing!! " << endl;
+            cellsRevealed--;
             return;
     }
     qDebug() << "mine number incremented." << endl;
+
+    int row = results.at(0).toInt();
+    int column = results.at(1).toInt();
+
+    //!!!!ahh baddd recursive function call for clearing
+    clear(row, column);
     buttonPushed->setFlat(true);    // if revealed, set button flat
     buttonPushed->setDisabled(true);    // according to Prof.'s specs
 
     if ( results.size() != 2) //Ensure that we receive two coordinatesrightClickedButton
         exit(-1);
 
-    int row = results.at(0).toInt();
-    int column = results.at(1).toInt();
-
     buttonPushed->setText(QString::number(game->getValue(row, column)));
     if ( game->isMine( row, column ) ) {
         lost();
+        cellsRevealed--;
         return;
     }
 
     if ( !hasStarted ) timer->start(1000);
     hasStarted = true;
-
-    cellsRevealed++;
-
-    //!!!!ahh baddd recursive function call for clearing
-    clearing(coordinates);
 }
 
-bool MainWindow::clearing(int adjRow, int adjCol) {
-    if ( ( adjRow > -1 && adjRow < 10 ) && ( adjCol > -1 && adjRow < 10 ) ) {
-        if ( game->getValue (adjRow, adjCol) == 0 ) {
-            qDebug() << "Button to clear (" << adjRow << ", " << adjCol << ")" << endl;
-            revealCell(QString::number(adjRow)+","+QString::number(adjCol));
-            return true;
-        } else {
-            qDebug () << "Value of coordinates non-zero!";
-            return false;
+void MainWindow::clear(int row, int column)
+{
+    QString coordinates = QString::number(row) + "," + QString::number(column);
+    qDebug() << "I am checking " + QString::number(row) + "col: " + QString::number(column);
+    MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
+
+        if ( game->getValue(row, column) == 0 && buttonPushed->isFlat () == false)
+        {
+            buttonPushed->setText ("0");
+            buttonPushed->setFlat (true);
+            buttonPushed->setDisabled (true);
+            cellsRevealed++;
+
+            //Top left
+            if ( (row-1) != -1 && (column -1) != -1)
+                clear(row-1, column-1);
+            //Top center
+            if ( (row-1) != -1)
+                clear(row-1, column);
+            //Top right
+            if ( (row-1) != -1 && (column + 1) != 10)
+                clear(row-1, column+1);
+            //Left
+            if ( (column -1) != -1)
+                clear(row, column-1);
+            //Right
+            if ( (column + 1) != 10)
+                clear(row, column+1);
+            //Bottom left
+            if ( (row+1) != 10 && (column -1) != -1)
+                clear(row+1, column-1);
+            //Bottom center
+            if ( (row+1) != 10)
+                clear(row+1, column);
+            //Bottom right
+            if ( (row+1) != 10 && (column+1) != 10)
+            {
+                clear(row+1, column+1);
+            }
         }
-    } else {
-        qDebug () << "Coordinates (" << adjRow << ", " << adjCol << ") do not exist!" << endl;
-        return false;
-    }
-    return true;
-}
-
-void MainWindow::clearing (QString originalCoordinates) {
-    QStringList results = originalCoordinates.split(",");
-    qDebug() << "Enter recursive call with coordinates: " << results;
-
-    int row = results.at(0).toInt();
-    int column = results.at(1).toInt();
-    if (! clearing (row - 1, column - 1) ) return;
-    if (! clearing(row -1, column) ) return;
-    if (! clearing(row - 1, column + 1) ) return;
-    if (! clearing(row, column - 1) ) return;
-    if (! clearing(row, column) ) return;
-    if (! clearing(row, column + 1) ) return;
-    if (! clearing(row + 1, column - 1) ) return;
-    if (! clearing(row + 1, column) ) return;
-    if (! clearing(row + 1, column + 1) ) return;
+        else
+        {
+            qDebug() << "Row: " << row << "col: " << column << " is not zero, rather it is: " << game->getValue (row, column);
+            qDebug() << "Row: " << row << " col: " << column << " is " << buttonPushed->isFlat ();
+        }
 }
 
 void MainWindow::lost() {
@@ -198,11 +211,11 @@ void MainWindow::lost() {
     qDebug() << "num flags flagged: " << flagsFlagged << endl;
     qDebug() << "num cells revealed: " << cellsRevealed << endl;
     qDebug() << "num mines flagged: " << minesFlagged << endl;
-    hasLost = true;
+    hasFinished = true;
 }
 
 void MainWindow::reset() {
-    hasLost = false;
+    hasFinished = false;
     cellsRevealed = 0;
     flagsFlagged = 0;
     minesFlagged = 0;
@@ -223,6 +236,7 @@ void MainWindow::reset() {
             MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
             button->setText("");
             button->setFlat(false);
+            button->setDisabled (false);
         }
 
     }
@@ -232,6 +246,7 @@ void MainWindow::won()
 {
     //ui->timerLabel->setText("0");
     timer->stop();
+    hasFinished = true;
 
     SaveScore* scoreScreen = new SaveScore(this->currentTime);
 
@@ -245,8 +260,22 @@ void MainWindow::handleSmileyFace()
 
 void MainWindow::handleTopTen()
 {
+    qDebug() << "Top ten";
     TopTen* scores = new TopTen();
     scores->show();
+}
+
+void MainWindow::handleHelpButton()
+{
+    HelpWindow* help = new HelpWindow();
+    help->show();
+}
+
+void MainWindow::handleAboutButton()
+{
+    AboutWindow* aboutWindow = new AboutWindow();
+
+    aboutWindow->show();
 }
 
 MainWindow::~MainWindow()

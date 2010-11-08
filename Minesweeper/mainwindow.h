@@ -5,8 +5,6 @@
 #include <QMainWindow>
 #include <QSignalMapper>
 #include "minesweeper.h"
-#include "aboutwindow.h"
-#include "helpwindow.h"
 
 namespace Ui {
     class MainWindow;
@@ -27,19 +25,17 @@ private:
     Minesweeper *game;
     QSignalMapper *signalMapper;
     QSignalMapper *signalMapper2;
-    HelpWindow *helpWindow;
-    AboutWindow *aboutWindow;
+
     QTimer *timer;
     int currentTime;
     bool hasStarted;
-    bool hasLost;
+    bool hasFinished;
     int cellsRevealed;
     int minesFlagged;
     int flagsFlagged;
     void lost();
     void won();
-    bool clearing (int,int);
-    void clearing(QString);
+    void clear(int, int);
 
 private slots:
     void updateTimer();
@@ -47,6 +43,8 @@ private slots:
     void reset();
     void handleSmileyFace();
     void handleTopTen();
+    void handleAboutButton();
+    void handleHelpButton();
     //void revealAll(QString);
 
 public slots:

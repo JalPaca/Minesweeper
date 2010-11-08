@@ -10,14 +10,27 @@ SaveScore::SaveScore(int score, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SaveScore)
 {
+    this->setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     this->score = score;
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
+
+    //Database information
+    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE", "connection");
+
+    db.setDatabaseName("scores.sqlite");
+
+    if ( !db.open() )
+    {
+        qFatal("Failed to connect to database");
+    }
 }
 
 SaveScore::~SaveScore()
 {
     delete ui;
+    QSqlDatabase::database("connection").close();
+    QSqlDatabase::removeDatabase("connection");
 }
 
 void SaveScore::changeEvent(QEvent *e)
@@ -34,24 +47,25 @@ void SaveScore::changeEvent(QEvent *e)
 
 void SaveScore::save()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE");
-
-    db.setDatabaseName("scores.sqlite");
-
-    if ( !db.open() )
+    QString name = ui->name->text();
+    name = name.trimmed ();
+    if ( name.compare("") == 0)
     {
-        qFatal("Failed to connect to database");
+        QMessageBox error;
+        error.setText ("You must enter a name");
+        error.exec ();
+        return;
     }
-
-    QSqlQuery sql;
+    QSqlDatabase db = QSqlDatabase::database("connection");
+    QSqlQuery sql(db);
     sql.prepare("INSERT INTO scores (name, score) VALUES (:name, :score)");
     sql.bindValue(":name", ui->name->text());
     sql.bindValue(":score", this->score);
 
     if ( !sql.exec( ) )
     {
-        qFatal("Unable to select from database");
+        qFatal("Unable to insert to database");
     }
-    db.close();
+
     this->close();
 }
