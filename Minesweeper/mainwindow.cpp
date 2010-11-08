@@ -8,6 +8,8 @@
 #include "minesweeperbutton.h"
 #include "savescore.h"
 #include "topten.h"
+#include "aboutwindow.h"
+#include "helpwindow.h"
 #include <QTimer>
 #include <iostream>
 MainWindow::MainWindow(QWidget *parent) :
@@ -27,12 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer();
     ui->lcdFlagCount->setDigitCount(2);
 
-    //Connect help button
-    helpWindow = new HelpWindow();
-    aboutWindow =  new AboutWindow();
-
-    connect(ui->actionHelp, SIGNAL(triggered()), helpWindow, SLOT(show()));
-    connect(ui->actionAbout, SIGNAL(triggered()), aboutWindow, SLOT(show()));
+    connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(handleHelpButton()));
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(handleAboutButton()));
     connect(ui->action_Reset, SIGNAL(triggered()), this, SLOT(reset()));
     connect(ui->smileyFace, SIGNAL(clicked()), this, SLOT(handleSmileyFace()));
     connect(ui->actionTop_Ten, SIGNAL(triggered()), this, SLOT(handleTopTen()));
@@ -233,8 +231,22 @@ void MainWindow::handleSmileyFace()
 
 void MainWindow::handleTopTen()
 {
+    qDebug() << "Top ten";
     TopTen* scores = new TopTen();
     scores->show();
+}
+
+void MainWindow::handleHelpButton()
+{
+    HelpWindow* help = new HelpWindow();
+    help->show();
+}
+
+void MainWindow::handleAboutButton()
+{
+    AboutWindow* aboutWindow = new AboutWindow();
+
+    aboutWindow->show();
 }
 
 MainWindow::~MainWindow()

@@ -2,6 +2,7 @@
 #define TOPTEN_H
 
 #include <QDialog>
+#include <QSqlDatabase>
 
 namespace Ui {
     class TopTen;
@@ -19,6 +20,10 @@ protected:
 private:
     Ui::TopTen *ui;
     void getTopTenScores();
+
+private slots:
+    void resetScores();
+
 };
 
 #endif // TOPTEN_H

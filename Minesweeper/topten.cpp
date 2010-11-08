@@ -10,15 +10,13 @@ TopTen::TopTen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TopTen)
 {
+    this->setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
 
-    getTopTenScores();
-}
+    connect(ui->resetButton, SIGNAL(clicked()), this, SLOT(resetScores()));
 
-void TopTen::getTopTenScores()
-{
-    QString topScores = "<ol>";
-    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE");
+    //Database info
+    QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE", "connection");
 
     db.setDatabaseName("scores.sqlite");
 
@@ -27,7 +25,33 @@ void TopTen::getTopTenScores()
         qFatal("Failed to connect to database");
     }
 
-    QSqlQuery sql;
+    getTopTenScores();
+}
+
+void TopTen::resetScores()
+{
+    QSqlDatabase db = QSqlDatabase::database("connection");
+
+    QSqlQuery sql(db);
+
+    sql.prepare("DELETE FROM scores");
+
+    if ( !sql.exec() )
+    {
+        qFatal("Unable to truncate table from database");
+    }
+
+    getTopTenScores(); //Refresh view
+}
+
+void TopTen::getTopTenScores()
+{
+    QString topScores = "<ol>";
+
+    QSqlDatabase db = QSqlDatabase::database("connection");
+
+    QSqlQuery sql(db);
+
     sql.prepare("SELECT name, score FROM scores ORDER BY score ASC LIMIT 10");
 
     if ( !sql.exec() )
@@ -47,6 +71,8 @@ void TopTen::getTopTenScores()
 
 TopTen::~TopTen()
 {
+    QSqlDatabase::database("connection").close();
+    QSqlDatabase::removeDatabase("connection");
     delete ui;
 }
 

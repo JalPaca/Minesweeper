@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'topten.ui'
 **
-** Created: Sun Nov 7 00:23:03 2010
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Sun Nov 7 20:46:25 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -17,6 +17,7 @@
 #include <QtGui/QDialog>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QPushButton>
 
 QT_BEGIN_NAMESPACE
 
@@ -25,6 +26,8 @@ class Ui_TopTen
 public:
     QLabel *label;
     QLabel *topTenList;
+    QPushButton *resetButton;
+    QPushButton *close;
 
     void setupUi(QDialog *TopTen)
     {
@@ -36,10 +39,17 @@ public:
         label->setGeometry(QRect(40, 20, 181, 41));
         topTenList = new QLabel(TopTen);
         topTenList->setObjectName(QString::fromUtf8("topTenList"));
-        topTenList->setGeometry(QRect(20, 70, 231, 271));
+        topTenList->setGeometry(QRect(20, 70, 231, 221));
         topTenList->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        resetButton = new QPushButton(TopTen);
+        resetButton->setObjectName(QString::fromUtf8("resetButton"));
+        resetButton->setGeometry(QRect(20, 320, 93, 27));
+        close = new QPushButton(TopTen);
+        close->setObjectName(QString::fromUtf8("close"));
+        close->setGeometry(QRect(140, 320, 93, 27));
 
         retranslateUi(TopTen);
+        QObject::connect(close, SIGNAL(clicked()), TopTen, SLOT(close()));
 
         QMetaObject::connectSlotsByName(TopTen);
     } // setupUi
@@ -53,6 +63,8 @@ public:
 "</style></head><body style=\" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt;\">Top Ten</span></p></body></html>", 0, QApplication::UnicodeUTF8));
         topTenList->setText(QString());
+        resetButton->setText(QApplication::translate("TopTen", "Reset Scores", 0, QApplication::UnicodeUTF8));
+        close->setText(QApplication::translate("TopTen", "Close", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
