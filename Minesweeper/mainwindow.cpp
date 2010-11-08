@@ -118,7 +118,7 @@ void MainWindow::revealCell(QString coordinates)
 {
     cellsRevealed++;
     if (hasLost) return;
-    if (cellsRevealed == 90 || (minesFlagged == 10 && flagsFlagged == 10)) {
+    if (cellsRevealed == 90) {
         won();
         return;
     }
@@ -135,6 +135,8 @@ void MainWindow::revealCell(QString coordinates)
     }
     qDebug() << "mine number incremented." << endl;
     buttonPushed->setFlat(true);    // if revealed, set button flat
+    buttonPushed->setDisabled(true);    // according to Prof.'s specs
+
     if ( results.size() != 2) //Ensure that we receive two coordinatesrightClickedButton
         exit(-1);
 
@@ -156,28 +158,38 @@ void MainWindow::revealCell(QString coordinates)
     clearing(coordinates);
 }
 
-void MainWindow::clearing(int adjRow, int adjCol) {
+bool MainWindow::clearing(int adjRow, int adjCol) {
     if ( ( adjRow > -1 && adjRow < 10 ) && ( adjCol > -1 && adjRow < 10 ) ) {
-        if ( ! game->isMine(adjRow, adjCol) ) {
+        if ( game->getValue (adjRow, adjCol) == 0 ) {
+            qDebug() << "Button to clear (" << adjRow << ", " << adjCol << ")" << endl;
             revealCell(QString::number(adjRow)+","+QString::number(adjCol));
+            return true;
+        } else {
+            qDebug () << "Value of coordinates non-zero!";
+            return false;
         }
+    } else {
+        qDebug () << "Coordinates (" << adjRow << ", " << adjCol << ") do not exist!" << endl;
+        return false;
     }
+    return true;
 }
 
 void MainWindow::clearing (QString originalCoordinates) {
     QStringList results = originalCoordinates.split(",");
     qDebug() << "Enter recursive call with coordinates: " << results;
-    //results.operator <<()
+
     int row = results.at(0).toInt();
     int column = results.at(1).toInt();
-    clearing (row - 1, column - 1);
-    clearing(row -1, column);
-    clearing(row - 1, column + 1);
-    clearing(row, column - 1);
-    clearing(row, column + 1);
-    clearing(row + 1, column - 1);
-    clearing(row + 1, column);
-    clearing(row + 1, column + 1);
+    if (! clearing (row - 1, column - 1) ) return;
+    if (! clearing(row -1, column) ) return;
+    if (! clearing(row - 1, column + 1) ) return;
+    if (! clearing(row, column - 1) ) return;
+    if (! clearing(row, column) ) return;
+    if (! clearing(row, column + 1) ) return;
+    if (! clearing(row + 1, column - 1) ) return;
+    if (! clearing(row + 1, column) ) return;
+    if (! clearing(row + 1, column + 1) ) return;
 }
 
 void MainWindow::lost() {
@@ -253,8 +265,3 @@ void MainWindow::changeEvent(QEvent *e)
         break;
     }
 }
-
-//void MainWindow::on_action_Reset_triggered()
-//{
-
-//}
