@@ -59,10 +59,11 @@ MainWindow::MainWindow(QWidget *parent) :
             button->setAttribute(Qt::WA_LayoutUsesWidgetRect);
             button->setMaximumHeight(30);
             button->setMaximumWidth(30);
+
             button->setIcon (QIcon(QString("not_flat_button.png")));
             button->icon ().setThemeName ("not_flat_button.png");
             button->setIconSize (QSize(30,30));
-
+            //button->setStyleSheet("QPushButton { etch-disabled-text: 1; }");
             ui->mineContainer->addWidget(button, i, j);
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
             //button->setText(QString::number(game->getValue(i, j)));     // for debugging
@@ -181,8 +182,6 @@ void MainWindow::revealCell(QString coordinates)
         clear(row, column, true);
     }
 
-    buttonPushed->setFlat(true);    // if revealed, set button flat
-  //  buttonPushed->setDisabled(true);    // according to Prof.'s specs
 
     if ( results.size() != 2) //Ensure that we receive two coordinatesrightClickedButton
         exit(-1);
@@ -211,12 +210,14 @@ void MainWindow::revealCell(QString coordinates)
     }else {
         qDebug() << "This should never happen";
     }
+    buttonPushed->setFlat(true);    // if revealed, set button flat
+    //buttonPushed->setDisabled(true);    // according to Prof.'s specs
 
     if ( game->isMine( row, column ) ) {
         lost();
         cellsRevealed--;
         return;
-    }else{
+    } else {
         ui->smileyFace->setIcon(QIcon("normal_face.png"));
     }
 
@@ -248,7 +249,7 @@ void MainWindow::clear(int row, int column, bool allowedClear)
                 buttonPushed->setIcon (QIcon(QString("three_flat_button.png")));
                 buttonPushed->icon ().setThemeName ("three_flat_button.png");
             }
-            //           buttonPushed->setDisabled (true);
+            //buttonPushed->setDisabled (true);
             cellsRevealed++;
 
             if ( game->getValue (row, column) == 0)
@@ -294,13 +295,14 @@ void MainWindow::lost() {
    // ui->timerLabel->setText("0");
     ui->smileyFace->setIcon(QIcon("sad_face.png"));
     timer->stop();
+    hasFinished = true;
     for ( int i = 0; i < 10; i++ ) {
         for ( int j = 0; j < 10; j++ ) {
             QString coordinates = QString::number(i)+","+QString::number(j);
             MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
             if (! button->isFlat () && game->getValue (i,j) == 9 ) {
                 button->setFlat (true);
-   //             button->setDisabled (true);
+                //button->setDisabled (true);
                 if ( mineStatus[i][j] == 1 ) {
                     button->setIcon (QIcon(QString("mine_disarmed_flat_button.png")));
                 } else {
@@ -343,7 +345,8 @@ void MainWindow::reset() {
             button->icon ().setThemeName ("elementary");
             button->setIconSize (QSize(30,30));
             button->setFlat(false);
-            button->setDisabled (false);
+            mineStatus[i][j] = 0;
+            //button->setDisabled (false);
         }
 
     }
@@ -364,7 +367,7 @@ void MainWindow::won()
                 button->setFlat (true);
                 button->setIcon (QIcon(QString("mine_flat_button.png")));
                 button->icon ().setThemeName ("mine_flat_button.png");
-                button->setDisabled (true);
+                //button->setDisabled (true);
             }
         }
     }
@@ -381,7 +384,11 @@ void MainWindow::handleSmileyFace()
 
 void MainWindow::handleButtonPressed()
 {
+    if (hasFinished) {
+        return;
+    }
     ui->smileyFace->setIcon(QIcon("scared_face.png"));
+
 }
 
 void MainWindow::handleTopTen()
@@ -406,6 +413,9 @@ void MainWindow::handleAboutButton()
 
 void MainWindow::handleButtonReleased()
 {
+    if (hasFinished) {
+        return;
+    }
     ui->smileyFace->setIcon(QIcon("normal_face.png"));
 }
 

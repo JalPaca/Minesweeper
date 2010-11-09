@@ -51,9 +51,7 @@
    <string>MineSweeper</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{
-	border: 1px solid black;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -80,11 +78,18 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLCDNumber {
+	background-color: black;
+	color: red;
+	foreground-color: red;
+}</string>
+    </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
     <property name="segmentStyle">
-     <enum>QLCDNumber::Filled</enum>
+     <enum>QLCDNumber::Outline</enum>
     </property>
    </widget>
    <widget class="QLCDNumber" name="lcdFlagCount">
@@ -101,6 +106,13 @@
     </property>
     <property name="autoFillBackground">
      <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLCDNumber {
+	background-color: black;
+	border: 1px;
+	color: red;
+}</string>
     </property>
     <property name="smallDecimalPoint">
      <bool>true</bool>
@@ -137,7 +149,7 @@
      <x>0</x>
      <y>0</y>
      <width>329</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

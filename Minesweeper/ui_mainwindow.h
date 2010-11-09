@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 9 13:29:22 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Tue Nov 9 15:44:05 2010
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -64,9 +64,7 @@ public:
         brush2.setStyle(Qt::SolidPattern);
         palette.setBrush(QPalette::Disabled, QPalette::Button, brush2);
         MainWindow->setPalette(palette);
-        MainWindow->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"	border: 1px solid black;\n"
-"}"));
+        MainWindow->setStyleSheet(QString::fromUtf8(""));
         action_Game = new QAction(MainWindow);
         action_Game->setObjectName(QString::fromUtf8("action_Game"));
         action_Exit = new QAction(MainWindow);
@@ -94,13 +92,23 @@ public:
         lcdTimer = new QLCDNumber(centralWidget);
         lcdTimer->setObjectName(QString::fromUtf8("lcdTimer"));
         lcdTimer->setGeometry(QRect(240, 10, 64, 23));
+        lcdTimer->setStyleSheet(QString::fromUtf8("QLCDNumber {\n"
+"	background-color: black;\n"
+"	color: red;\n"
+"	foreground-color: red;\n"
+"}"));
         lcdTimer->setFrameShadow(QFrame::Raised);
-        lcdTimer->setSegmentStyle(QLCDNumber::Filled);
+        lcdTimer->setSegmentStyle(QLCDNumber::Outline);
         lcdFlagCount = new QLCDNumber(centralWidget);
         lcdFlagCount->setObjectName(QString::fromUtf8("lcdFlagCount"));
         lcdFlagCount->setEnabled(true);
         lcdFlagCount->setGeometry(QRect(30, 10, 64, 23));
         lcdFlagCount->setAutoFillBackground(false);
+        lcdFlagCount->setStyleSheet(QString::fromUtf8("QLCDNumber {\n"
+"	background-color: black;\n"
+"	border: 1px;\n"
+"	color: red;\n"
+"}"));
         lcdFlagCount->setSmallDecimalPoint(true);
         lcdFlagCount->setNumDigits(4);
         lcdFlagCount->setSegmentStyle(QLCDNumber::Filled);
@@ -113,7 +121,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 23));
+        menuBar->setGeometry(QRect(0, 0, 329, 25));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
