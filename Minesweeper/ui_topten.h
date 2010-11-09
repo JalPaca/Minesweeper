@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'topten.ui'
 **
-** Created: Mon Nov 8 19:10:54 2010
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Tue Nov 9 12:26:59 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

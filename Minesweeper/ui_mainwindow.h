@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Nov 8 20:35:00 2010
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Tue Nov 9 13:29:22 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -37,7 +37,7 @@ public:
     QAction *action_Reset;
     QAction *actionTop_Ten;
     QWidget *centralWidget;
-    QWidget *gridWidget;
+    QWidget *gridLayoutWidget;
     QGridLayout *mineContainer;
     QLCDNumber *lcdTimer;
     QLCDNumber *lcdFlagCount;
@@ -73,6 +73,7 @@ public:
         action_Exit->setObjectName(QString::fromUtf8("action_Exit"));
         actionHelp = new QAction(MainWindow);
         actionHelp->setObjectName(QString::fromUtf8("actionHelp"));
+        actionHelp->setShortcutContext(Qt::ApplicationShortcut);
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         action_Reset = new QAction(MainWindow);
@@ -82,20 +83,14 @@ public:
         actionTop_Ten->setObjectName(QString::fromUtf8("actionTop_Ten"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        gridWidget = new QWidget(centralWidget);
-        gridWidget->setObjectName(QString::fromUtf8("gridWidget"));
-        gridWidget->setGeometry(QRect(10, 40, 310, 272));
-        QPalette palette1;
-        QBrush brush3(QColor(172, 205, 214, 255));
-        brush3.setStyle(Qt::SolidPattern);
-        palette1.setBrush(QPalette::Active, QPalette::Button, brush3);
-        palette1.setBrush(QPalette::Inactive, QPalette::Button, brush3);
-        palette1.setBrush(QPalette::Disabled, QPalette::Button, brush3);
-        gridWidget->setPalette(palette1);
-        mineContainer = new QGridLayout(gridWidget);
+        gridLayoutWidget = new QWidget(centralWidget);
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(10, 40, 310, 272));
+        mineContainer = new QGridLayout(gridLayoutWidget);
         mineContainer->setSpacing(0);
         mineContainer->setContentsMargins(11, 11, 11, 11);
         mineContainer->setObjectName(QString::fromUtf8("mineContainer"));
+        mineContainer->setContentsMargins(0, 0, 0, 0);
         lcdTimer = new QLCDNumber(centralWidget);
         lcdTimer->setObjectName(QString::fromUtf8("lcdTimer"));
         lcdTimer->setGeometry(QRect(240, 10, 64, 23));
@@ -111,11 +106,14 @@ public:
         lcdFlagCount->setSegmentStyle(QLCDNumber::Filled);
         smileyFace = new QPushButton(centralWidget);
         smileyFace->setObjectName(QString::fromUtf8("smileyFace"));
-        smileyFace->setGeometry(QRect(120, 0, 93, 27));
+        smileyFace->setGeometry(QRect(150, 10, 31, 27));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("normal_face.png"), QSize(), QIcon::Normal, QIcon::On);
+        smileyFace->setIcon(icon);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 25));
+        menuBar->setGeometry(QRect(0, 0, 329, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
@@ -156,7 +154,7 @@ public:
         actionAbout->setShortcut(QApplication::translate("MainWindow", "Shift+A", 0, QApplication::UnicodeUTF8));
         action_Reset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
         actionTop_Ten->setText(QApplication::translate("MainWindow", "Top Ten", 0, QApplication::UnicodeUTF8));
-        smileyFace->setText(QApplication::translate("MainWindow", ":)", 0, QApplication::UnicodeUTF8));
+        smileyFace->setText(QString());
         menu_File->setTitle(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
         menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

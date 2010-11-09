@@ -36,6 +36,7 @@ private:
     void lost();
     void won();
     void clear(int, int, bool);
+    int mineStatus[10][10];
 
 private slots:
     void updateTimer();
@@ -45,6 +46,8 @@ private slots:
     void handleTopTen();
     void handleAboutButton();
     void handleHelpButton();
+    void handleButtonPressed();
+    void handleButtonReleased();
     //void revealAll(QString);
 
 public slots:

@@ -30,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lcdFlagCount->setDigitCount(2);
     ui->lcdFlagCount->display (10-flagsFlagged);
 
+    //Initialize statuses
+    for ( int i = 0; i < 10; i++)
+    {
+        for ( int j = 0; j < 10; j++)
+            mineStatus[i][j] = 0;
+    }
+
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(handleHelpButton()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(handleAboutButton()));
     connect(ui->action_Reset, SIGNAL(triggered()), this, SLOT(reset()));
@@ -64,6 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
             QObject::connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
             connect(button, SIGNAL(rightButtonClicked()), signalMapper2, SLOT(map()));
+            connect(button, SIGNAL(pressed()), this, SLOT(handleButtonPressed()));
+            connect(button, SIGNAL(released()), this, SLOT(handleButtonReleased()));
         }
     }
 
@@ -78,46 +87,48 @@ void MainWindow::hasRightClicked(QString coordinates)
     if (hasFinished) return;
         MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
+        // find if flagged a mine
+        QStringList results = coordinates.split(",");
+
+        int row = results.at(0).toInt();
+        int column = results.at(1).toInt();
+
         if ( !hasStarted ) timer->start(1000);
         hasStarted = true;
 qDebug () << "right clicked!!!!";
         if (! buttonPushed->isFlat() ) {
                 buttonPushed->setFlat(false);
 qDebug () << "isn't flat when right clicked!"<< buttonPushed->icon ().themeName ();
-                if ( buttonPushed->icon ().themeName ().compare (QString("not_flat_button.png")) == 0){
+                //0 = flat, 1 = flat with flag, 2 =
+//it appears that question marks are cleared but flags are not
+                if ( mineStatus[row][column] == 0){
                     qDebug() << "case1";
                         flagsFlagged++;
                         //buttonPushed->setText("M");
                         buttonPushed->setIcon (QIcon(QString("flag_no_flat_button.png")));
-                        buttonPushed->icon ().setThemeName ("flag_no_flat_button.png");
-                        qDebug() << buttonPushed->icon ().themeName ();
+                        mineStatus[row][column] = 1;
                         buttonPushed->setIconSize (QSize(30,30));
                         ui->lcdFlagCount->display(10-flagsFlagged);
-
-                        // find if flagged a mine
-                        QStringList results = coordinates.split(",");
-
-                        int row = results.at(0).toInt();
-                        int column = results.at(1).toInt();
 
                         if ( game->getValue(row, column) == 9 ) {
                             minesFlagged++;
                         }
-                } else if ( buttonPushed->icon().themeName ().compare(QString("unknown_no_flat_button.png")) == 0 ) {
+                } else if ( mineStatus[row][column] == 1 ) {
                     qDebug() << "case2";
-                        buttonPushed->setText("");
-                        buttonPushed->setIcon (QIcon("not_flat_button.png"));
-                        buttonPushed->icon ().setThemeName ("not_flat_button.png");
-                        buttonPushed->setIconSize (QSize(30,30));
-                } else if ( buttonPushed->icon ().themeName ().compare(QString("flag_no_flat_button.png")) == 0 ) {
                         flagsFlagged--;
-                        ui->lcdFlagCount->display(flagsFlagged);
+                        ui->lcdFlagCount->display(10-flagsFlagged);
+                        buttonPushed->setText("");
+                        buttonPushed->setIcon (QIcon("unknown_no_flat_button.png"));
+                        mineStatus[row][column] = 2;
+                        buttonPushed->setIconSize (QSize(30,30));
+                } else if ( mineStatus[row][column] == 2 ) {
+                        ui->lcdFlagCount->display(10-flagsFlagged);
                         qDebug() << "case3";
-                        buttonPushed->setIcon (QIcon(QString("unknown_no_flat_button.png")));
-                        buttonPushed->icon ().setThemeName ("unknown_no_flat_button.png");
+                        buttonPushed->setIcon (QIcon(QString("not_flat_button.png")));
+                       mineStatus[row][column] = 0;
                         // don't do anything!
                         qDebug() << "asdf";
-                } else {
+                }else {
                     qDebug() << "case badddd" << endl;
                 }
         } else {
@@ -143,20 +154,26 @@ void MainWindow::revealCell(QString coordinates)
     qDebug() << "Cells revealed: " << cellsRevealed;
     QStringList results = coordinates.split(",");
     MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
-    if ( buttonPushed->icon ().themeName ().compare(QString("flag_no_flat_button.png")) == 0 || buttonPushed->icon().themeName ().compare(QString("unknown_no_flat_button.png")) == 0) {
+
+    int row = results.at(0).toInt();
+    int column = results.at(1).toInt();
+
+    qDebug() << "This cell contains a " << game->getValue(row, column);
+
+    if ( mineStatus[row][column] == 1 || mineStatus[row][column] == 2) {
             qDebug() << "flag clicked on...must return" << endl;
             cellsRevealed--;
             return;
-    }
+        }else{
+            qDebug() << "The status is: " << mineStatus[row][column];
+        }
     if (buttonPushed->isFlat()) {
             qDebug() << "is flat; should be doing nothing!! " << endl;
             cellsRevealed--;
             return;
     }
-    qDebug() << "mine number incremented." << endl;
 
-    int row = results.at(0).toInt();
-    int column = results.at(1).toInt();
+    qDebug() << "mine number incremented." << endl;
 
     //!!!!ahh baddd recursive function call for clearing
     if ( game->getValue (row, column) == 0 ) {
@@ -173,24 +190,34 @@ void MainWindow::revealCell(QString coordinates)
     //buttonPushed->setText(QString::number(game->getValue(row, column)));
     if ( game->getValue (row, column) == 0) {
         buttonPushed->setIcon (QIcon(QString("flat_button.png")));
-        buttonPushed->icon ().setThemeName ("flat_button.png");
     } else if ( game->getValue (row,column) == 1) {
         buttonPushed->setIcon (QIcon(QString("one_flat_button.png")));
-        buttonPushed->icon ().setThemeName ("one_flat_button.png");
     } else if (game->getValue (row,column) == 2) {
         buttonPushed->setIcon (QIcon(QString("two_flat_button.png")));
-        buttonPushed->icon ().setThemeName ("two_flat_button.png");
-    } else if (game->getValue (row,column) == 2){
+    } else if (game->getValue (row,column) == 3){
         buttonPushed->setIcon (QIcon(QString("three_flat_button.png")));
-        buttonPushed->icon ().setThemeName ("three_flat_button.png");
-    } else {
+    } else if (game->getValue (row,column) == 4){
+        buttonPushed->setIcon (QIcon(QString("four_flat_button.png")));
+    } else if (game->getValue (row,column) == 5){
+        buttonPushed->setIcon (QIcon(QString("five_flat_button.png")));
+    } else if (game->getValue (row,column) == 6){
+        buttonPushed->setIcon (QIcon(QString("six_flat_button.png")));
+    } else if (game->getValue (row,column) == 7){
+        buttonPushed->setIcon (QIcon(QString("seven_flat_button.png")));
+    } else if (game->getValue (row,column) == 8){
+        buttonPushed->setIcon (QIcon(QString("eight_flat_button.png")));
+    } else if (game->getValue(row, column) == 9) {
         buttonPushed->setIcon (QIcon(QString("mine_exploded_flat_button.png")));
-        buttonPushed->icon ().setThemeName ("mine_exploded_flat_button.png");
+    }else {
+        qDebug() << "This should never happen";
     }
+
     if ( game->isMine( row, column ) ) {
         lost();
         cellsRevealed--;
         return;
+    }else{
+        ui->smileyFace->setIcon(QIcon("normal_face.png"));
     }
 
     if ( !hasStarted ) timer->start(1000);
@@ -203,7 +230,7 @@ void MainWindow::clear(int row, int column, bool allowedClear)
     qDebug() << "I am checking " + QString::number(row) + "col: " + QString::number(column);
     MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
-        if ( buttonPushed->isFlat () == false && game->getValue (row, column) != 9 && allowedClear == true)
+        if ( buttonPushed->isFlat () == false && game->getValue (row, column) != 9 && allowedClear == true && mineStatus[row][column] != 1)
         {
      //       buttonPushed->setText (QString::number (game->getValue (row, column)));
 
@@ -265,6 +292,7 @@ void MainWindow::clear(int row, int column, bool allowedClear)
 
 void MainWindow::lost() {
    // ui->timerLabel->setText("0");
+    ui->smileyFace->setIcon(QIcon("sad_face.png"));
     timer->stop();
     for ( int i = 0; i < 10; i++ ) {
         for ( int j = 0; j < 10; j++ ) {
@@ -273,12 +301,10 @@ void MainWindow::lost() {
             if (! button->isFlat () && game->getValue (i,j) == 9 ) {
                 button->setFlat (true);
    //             button->setDisabled (true);
-                if ( button->icon ().themeName ().compare(QString("flag_no_flat_button.png")) == 0 ) {
+                if ( mineStatus[i][j] == 1 ) {
                     button->setIcon (QIcon(QString("mine_disarmed_flat_button.png")));
-                    button->icon ().setThemeName ("mine_disarmed_flat_button.png");
                 } else {
                     button->setIcon (QIcon(QString("mine_flat_button.png")));
-                    button->icon ().setThemeName ("mine_flat_button.png");
                 }
             }
 
@@ -298,8 +324,10 @@ void MainWindow::reset() {
     hasStarted = false;
     currentTime = 0;
 
+    this->timer->stop();
     ui->lcdFlagCount->display(10-flagsFlagged);
     ui->lcdTimer->display(currentTime);
+    ui->smileyFace->setIcon(QIcon("normal_face.png"));
 
 //    this->game;
     game = new Minesweeper();
@@ -324,6 +352,7 @@ void MainWindow::reset() {
 void MainWindow::won()
 {
     //ui->timerLabel->setText("0");
+    ui->smileyFace->setIcon(QIcon("happy_face.png"));
     timer->stop();
     hasFinished = true;
 
@@ -347,7 +376,12 @@ void MainWindow::won()
 
 void MainWindow::handleSmileyFace()
 {
-    won();
+    this->reset();
+}
+
+void MainWindow::handleButtonPressed()
+{
+    ui->smileyFace->setIcon(QIcon("scared_face.png"));
 }
 
 void MainWindow::handleTopTen()
@@ -368,6 +402,11 @@ void MainWindow::handleAboutButton()
     AboutWindow* aboutWindow = new AboutWindow();
 
     aboutWindow->show();
+}
+
+void MainWindow::handleButtonReleased()
+{
+    ui->smileyFace->setIcon(QIcon("normal_face.png"));
 }
 
 MainWindow::~MainWindow()
