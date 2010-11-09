@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Nov 8 08:56:21 2010
+** Created: Mon Nov 8 20:35:00 2010
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,7 +37,7 @@ public:
     QAction *action_Reset;
     QAction *actionTop_Ten;
     QWidget *centralWidget;
-    QWidget *gridLayoutWidget;
+    QWidget *gridWidget;
     QGridLayout *mineContainer;
     QLCDNumber *lcdTimer;
     QLCDNumber *lcdFlagCount;
@@ -53,6 +53,17 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(329, 376);
+        QPalette palette;
+        QBrush brush(QColor(184, 196, 214, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush);
+        QBrush brush1(QColor(194, 214, 214, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush1);
+        QBrush brush2(QColor(214, 214, 214, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush2);
+        MainWindow->setPalette(palette);
         MainWindow->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "	border: 1px solid black;\n"
 "}"));
@@ -71,17 +82,25 @@ public:
         actionTop_Ten->setObjectName(QString::fromUtf8("actionTop_Ten"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        gridLayoutWidget = new QWidget(centralWidget);
-        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 40, 310, 272));
-        mineContainer = new QGridLayout(gridLayoutWidget);
+        gridWidget = new QWidget(centralWidget);
+        gridWidget->setObjectName(QString::fromUtf8("gridWidget"));
+        gridWidget->setGeometry(QRect(10, 40, 310, 272));
+        QPalette palette1;
+        QBrush brush3(QColor(172, 205, 214, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Button, brush3);
+        palette1.setBrush(QPalette::Inactive, QPalette::Button, brush3);
+        palette1.setBrush(QPalette::Disabled, QPalette::Button, brush3);
+        gridWidget->setPalette(palette1);
+        mineContainer = new QGridLayout(gridWidget);
         mineContainer->setSpacing(0);
         mineContainer->setContentsMargins(11, 11, 11, 11);
         mineContainer->setObjectName(QString::fromUtf8("mineContainer"));
-        mineContainer->setContentsMargins(0, 0, 0, 0);
         lcdTimer = new QLCDNumber(centralWidget);
         lcdTimer->setObjectName(QString::fromUtf8("lcdTimer"));
         lcdTimer->setGeometry(QRect(240, 10, 64, 23));
+        lcdTimer->setFrameShadow(QFrame::Raised);
+        lcdTimer->setSegmentStyle(QLCDNumber::Filled);
         lcdFlagCount = new QLCDNumber(centralWidget);
         lcdFlagCount->setObjectName(QString::fromUtf8("lcdFlagCount"));
         lcdFlagCount->setEnabled(true);
@@ -96,7 +115,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 23));
+        menuBar->setGeometry(QRect(0, 0, 329, 25));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
