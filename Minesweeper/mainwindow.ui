@@ -54,6 +54,11 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	border:  1px, hidden;
+}</string>
+   </property>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>

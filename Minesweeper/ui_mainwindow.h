@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 9 15:44:05 2010
+** Created: Tue Nov 9 17:31:59 2010
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -81,6 +81,9 @@ public:
         actionTop_Ten->setObjectName(QString::fromUtf8("actionTop_Ten"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        centralWidget->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	border:  1px, hidden;\n"
+"}"));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
         gridLayoutWidget->setGeometry(QRect(10, 40, 310, 272));
