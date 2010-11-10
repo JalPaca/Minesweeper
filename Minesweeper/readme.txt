@@ -4,6 +4,34 @@ Aisha Halim (ahalim4)
 
 Welcome to our Minesweeper game. In this readme file, we will discuss the data structures and algorithms within the game that we have created. We suppose you know all about how Minesweeper works (if you don't, check the Help dialog in game.) 
 
+INSTRUCTIONS TO COMPILE AND RUN:
+
+Linux:
+
+qmake
+make
+./Minesweeper
+
+====================================
+
+Windows:
+
+qmake
+mingw32-make.exe -f Makefile.release
+
+You can then double click on Minesweeper.exe in the release folder
+
+====================================
+
+Mac OS X
+
+qmake -spec macx-g++
+make
+
+You can then launch Minesweeper.app in the current working directory
+
+===================================
+
 OVERVIEW:
 
 First of all, we utilize Qt to the fullest extent. The mainwindow class contains all the necessary rules of minesweeper in order to play while the minesweeper class contains the actual minesweeper board. A variety of other classes have been created for the sole purpose of displaying a dialog box. These classes are somewhat short but powerful in what they are capable of doing.
