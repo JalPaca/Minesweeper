@@ -24,3 +24,4 @@ FORMS += mainwindow.ui \
     aboutwindow.ui \
     savescore.ui \
     topten.ui
+RESOURCES += images.qrc

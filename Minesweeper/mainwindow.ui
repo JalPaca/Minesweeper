@@ -48,7 +48,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MineSweeper</string>
+   <string>Minesweeper</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -87,7 +87,6 @@
      <string notr="true">QLCDNumber {
 	background-color: black;
 	color: red;
-	foreground-color: red;
 }</string>
     </property>
     <property name="frameShadow">
@@ -143,7 +142,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normalon>normal_face.png</normalon>
+      <normalon>:/images/normal_face.png</normalon>
      </iconset>
     </property>
    </widget>

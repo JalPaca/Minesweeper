@@ -1,3 +1,11 @@
+/**
+ * HelpWindow
+ * Displays the help window and shows helpful information
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #include "helpwindow.h"
 #include "ui_helpwindow.h"
 

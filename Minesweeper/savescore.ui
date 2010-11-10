@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Winner!!!!</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -62,7 +62,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Congratulations!</string>
+    <string>Congratulations! You have won Minesweeper, please enter your name!</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

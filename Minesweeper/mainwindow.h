@@ -1,10 +1,23 @@
+/**
+ * Minesweeper header files
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define NUMBER_OF_MINES 10
+#define BLANK_CELL 0
+#define FLAGGED_CELL 1
+#define QUESTION_CELL 2
+#define MINE 9
 
 #include <iostream>
 #include <QMainWindow>
 #include <QSignalMapper>
 #include "minesweeper.h"
+#include "minesweeperbutton.h"
 
 namespace Ui {
     class MainWindow;
@@ -37,6 +50,7 @@ private:
     void won();
     void clear(int, int, bool);
     int mineStatus[10][10];
+    void changeIcon(MineSweeperButton*, int, int);
 
 private slots:
     void updateTimer();

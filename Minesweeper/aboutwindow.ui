@@ -54,7 +54,7 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>pink_unicorn.png</pixmap>
+    <pixmap resource="images.qrc">:/images/pink_unicorn.png</pixmap>
    </property>
   </widget>
   <widget class="QDialogButtonBox" name="okButton">
@@ -71,7 +71,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>okButton</sender>

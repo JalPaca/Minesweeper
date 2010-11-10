@@ -1,3 +1,12 @@
+/**
+ * AboutWindow
+ * Shows the about window
+ * Implements QPushButton and adds functionality for right clicking
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #include "aboutwindow.h"
 #include "ui_aboutwindow.h"
 

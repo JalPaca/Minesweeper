@@ -77,11 +77,13 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>awesome_face.png</pixmap>
+    <pixmap resource="images.qrc">:/images/awesome_face.png</pixmap>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

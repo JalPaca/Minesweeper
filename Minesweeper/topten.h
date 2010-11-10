@@ -1,3 +1,10 @@
+/**
+ * Minesweeper header files
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #ifndef TOPTEN_H
 #define TOPTEN_H
 

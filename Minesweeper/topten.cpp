@@ -1,11 +1,21 @@
+/**
+ * TopTen
+ * Displays information about the top ten players
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
 #include "topten.h"
-#include <QFile>
-#include <QDebug>
 #include "ui_topten.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlError>
 
+/**
+  * Constructor
+  * Sets up database connection and connects the reset button to clear all the information
+  */
 TopTen::TopTen(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TopTen)
@@ -28,12 +38,17 @@ TopTen::TopTen(QWidget *parent) :
     getTopTenScores();
 }
 
+/**
+  * resetScores()
+  * Erases the score table
+  */
 void TopTen::resetScores()
 {
     QSqlDatabase db = QSqlDatabase::database("connection");
 
     QSqlQuery sql(db);
 
+    //Clear the table
     sql.prepare("DELETE FROM scores");
 
     if ( !sql.exec() )
@@ -44,6 +59,10 @@ void TopTen::resetScores()
     getTopTenScores(); //Refresh view
 }
 
+/**
+  * getTopTenScores()
+  * Gets the top ten scores from the database and ensures that the scores table already exists
+  */
 void TopTen::getTopTenScores()
 {
     QString topScores = "<ol>";
@@ -52,6 +71,15 @@ void TopTen::getTopTenScores()
 
     QSqlQuery sql(db);
 
+    //Ensure that the table exists!
+    sql.prepare("CREATE  TABLE  IF NOT EXISTS \"scores\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , \"score\" INTEGER, \"name\" TEXT)");
+
+    if ( !sql.exec())
+    {
+        QString error = sql.lastError().text();
+    }
+
+    //Grab the top ten players
     sql.prepare("SELECT name, score FROM scores ORDER BY score ASC LIMIT 10");
 
     if ( !sql.exec() )
@@ -61,14 +89,19 @@ void TopTen::getTopTenScores()
 
     QSqlRecord record = sql.record();
 
+    //Create a list of those top ten players
     for( int r=0; sql.next(); r++ )
               topScores += "<li>" + sql.value(0).toString() + " - " + sql.value(1).toString() +"</li>";
 
     topScores += "</ol>";
+
+    //Set the list for the user to see
     ui->topTenList->setText(topScores);
 }
 
-
+/**
+  * Destructor
+  */
 TopTen::~TopTen()
 {
     QSqlDatabase::database("connection").close();

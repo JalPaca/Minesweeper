@@ -1,3 +1,10 @@
+/**
+ * Minesweeper header files
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
 #define MINE 9
@@ -12,7 +19,6 @@ public:
 private:
     void generateBoard();
     int mineBoard[10][10];
-    void printBoard();
 };
 
 #endif // MINESWEEPER_H

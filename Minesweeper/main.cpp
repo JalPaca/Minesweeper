@@ -1,15 +1,19 @@
+/**
+ * Main
+ * We drive the game. yep.
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
 #include <QtGui/QApplication>
 #include "mainwindow.h"
-#include "minesweeper.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setStyle("gtk");
     
     MainWindow w;
     w.show();
 
-    Minesweeper board;
     return a.exec();
 }

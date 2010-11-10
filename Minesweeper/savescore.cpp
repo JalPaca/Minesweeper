@@ -1,3 +1,11 @@
+/**
+ * SaveScore
+ * Saves the winner's score and name
+ * @author Stephen Liang
+ * @author Aisha Halim
+ * Created for CS 340 Fall 2010 - Professor Troy
+ */
+
 #include "savescore.h"
 #include "ui_savescore.h"
 #include <QDebug>
@@ -6,6 +14,10 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+/**
+  * Constructor
+  * Opens a database connection and connects the ok button to save a score
+  */
 SaveScore::SaveScore(int score, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SaveScore)
@@ -26,6 +38,9 @@ SaveScore::SaveScore(int score, QWidget *parent) :
     }
 }
 
+/**
+  * Destructor
+  */
 SaveScore::~SaveScore()
 {
     delete ui;
@@ -45,8 +60,13 @@ void SaveScore::changeEvent(QEvent *e)
     }
 }
 
+/**
+  * save()
+  * Saves the score and the name
+  */
 void SaveScore::save()
 {
+    //Grab the name and check the input
     QString name = ui->name->text();
     name = name.trimmed ();
     if ( name.compare("") == 0)
@@ -56,9 +76,13 @@ void SaveScore::save()
         error.exec ();
         return;
     }
+
+    //Insert the name and score into the sqlite database
     QSqlDatabase db = QSqlDatabase::database("connection");
     QSqlQuery sql(db);
     sql.prepare("INSERT INTO scores (name, score) VALUES (:name, :score)");
+
+    //Ensure sanitary input
     sql.bindValue(":name", ui->name->text());
     sql.bindValue(":score", this->score);
 
