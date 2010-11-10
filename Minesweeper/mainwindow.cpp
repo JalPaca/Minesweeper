@@ -458,7 +458,7 @@ void MainWindow::won()
             QString coordinates = QString::number(i)+","+QString::number(j);
             MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
-            if (! button->isFlat () )
+            if (! button->isFlat () && game->getValue(i, j) == MINE )
             {
                 button->setFlat (true);
                 button->setIcon (QIcon(QString(":/images/mine_disarmed_flat_button.png")));
