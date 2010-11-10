@@ -80,6 +80,15 @@ void SaveScore::save()
     //Insert the name and score into the sqlite database
     QSqlDatabase db = QSqlDatabase::database("connection");
     QSqlQuery sql(db);
+
+    //Ensure that the table exists!
+    sql.prepare("CREATE  TABLE  IF NOT EXISTS \"scores\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , \"score\" INTEGER, \"name\" TEXT)");
+
+    if ( !sql.exec())
+    {
+        qFatal("Unable to create table");
+    }
+
     sql.prepare("INSERT INTO scores (name, score) VALUES (:name, :score)");
 
     //Ensure sanitary input
