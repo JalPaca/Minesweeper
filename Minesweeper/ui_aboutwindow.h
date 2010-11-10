@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutwindow.ui'
 **
-** Created: Tue Nov 9 12:26:59 2010
+** Created: Tue Nov 9 17:57:50 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,12 +35,12 @@ public:
         AboutWindow->resize(308, 368);
         label = new QLabel(AboutWindow);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(40, 10, 241, 231));
+        label->setGeometry(QRect(40, 10, 241, 251));
         label->setTextFormat(Qt::RichText);
         label->setWordWrap(true);
         label_2 = new QLabel(AboutWindow);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(10, 250, 341, 151));
+        label_2->setGeometry(QRect(0, 270, 341, 161));
         label_2->setPixmap(QPixmap(QString::fromUtf8("pink_unicorn.png")));
         okButton = new QDialogButtonBox(AboutWindow);
         okButton->setObjectName(QString::fromUtf8("okButton"));
@@ -62,10 +62,10 @@ public:
 "</style></head><body style=\" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:16pt;\">About</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This minesweeper program was created under the GNU General Public License Version 3. Contributors include:</p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><l"
-                        "i style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Aisha Halim</li>\n"
-"<li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stephen Liang</li></ul>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This minesweeper program was created under the GNU General Public License Version 3. This project was done for CS 340 (Software Design) at University of Illinois at Chicago. Contributors include:</p>\n"
+"<ul style=\"margin-to"
+                        "p: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Aisha Halim (ahalim4)</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Stephen Liang (sliang6)</li></ul>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Thank you for playing this game, we appreciate it. Please post patches if you like to. Have fun.</p></body></html>", 0, QApplication::UnicodeUTF8));
         label_2->setText(QString());
     } // retranslateUi

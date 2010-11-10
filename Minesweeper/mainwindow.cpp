@@ -145,19 +145,20 @@ void MainWindow::updateTimer() {
 
 void MainWindow::revealCell(QString coordinates)
 {
+    QStringList results = coordinates.split(",");
+    int row = results.at(0).toInt();
+    int column = results.at(1).toInt();
+
     if (hasFinished) return;
     else cellsRevealed++;
     qDebug() << "Cells: " << cellsRevealed;
-    if (cellsRevealed == 90) {
+    if (cellsRevealed == 90 && game->getValue(row, column) != MINE) {
         won();
         return;
     }
     qDebug() << "Cells revealed: " << cellsRevealed;
-    QStringList results = coordinates.split(",");
-    MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
-    int row = results.at(0).toInt();
-    int column = results.at(1).toInt();
+    MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
 
     qDebug() << "This cell contains a " << game->getValue(row, column);
 

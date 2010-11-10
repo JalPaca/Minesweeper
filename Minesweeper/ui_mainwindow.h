@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 9 17:31:59 2010
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Tue Nov 9 17:55:49 2010
+**      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -124,7 +124,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 329, 25));
+        menuBar->setGeometry(QRect(0, 0, 329, 23));
         menu_File = new QMenu(menuBar);
         menu_File->setObjectName(QString::fromUtf8("menu_File"));
         menu_Help = new QMenu(menuBar);
@@ -164,7 +164,9 @@ public:
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
         actionAbout->setShortcut(QApplication::translate("MainWindow", "Shift+A", 0, QApplication::UnicodeUTF8));
         action_Reset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
+        action_Reset->setShortcut(QApplication::translate("MainWindow", "Shift+R", 0, QApplication::UnicodeUTF8));
         actionTop_Ten->setText(QApplication::translate("MainWindow", "Top Ten", 0, QApplication::UnicodeUTF8));
+        actionTop_Ten->setShortcut(QApplication::translate("MainWindow", "Shift+T", 0, QApplication::UnicodeUTF8));
         smileyFace->setText(QString());
         menu_File->setTitle(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
         menu_Help->setTitle(QApplication::translate("MainWindow", "&Help", 0, QApplication::UnicodeUTF8));
