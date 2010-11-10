@@ -50,6 +50,10 @@
   <property name="windowTitle">
    <string>Minesweeper</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/images/mine_flat_button.png</normaloff>:/images/mine_flat_button.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -240,7 +244,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Exit</sender>
