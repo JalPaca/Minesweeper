@@ -14,10 +14,10 @@ make
 
 ====================================
 
-Windows:
+Windows (Using Qt Command Prompt):
 
 qmake
-mingw32-make.exe -f Makefile.Release
+make -f Makefile.Release
 
 You can then double click on Minesweeper.exe in the release folder
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 9 17:55:49 2010
+** Created: Tue Nov 9 21:39:59 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -98,7 +98,6 @@ public:
         lcdTimer->setStyleSheet(QString::fromUtf8("QLCDNumber {\n"
 "	background-color: black;\n"
 "	color: red;\n"
-"	foreground-color: red;\n"
 "}"));
         lcdTimer->setFrameShadow(QFrame::Raised);
         lcdTimer->setSegmentStyle(QLCDNumber::Outline);
@@ -119,7 +118,7 @@ public:
         smileyFace->setObjectName(QString::fromUtf8("smileyFace"));
         smileyFace->setGeometry(QRect(150, 10, 31, 27));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("normal_face.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon.addFile(QString::fromUtf8(":/images/normal_face.png"), QSize(), QIcon::Normal, QIcon::On);
         smileyFace->setIcon(icon);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -154,7 +153,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MineSweeper", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Minesweeper", 0, QApplication::UnicodeUTF8));
         action_Game->setText(QApplication::translate("MainWindow", "&Game", 0, QApplication::UnicodeUTF8));
         action_Game->setShortcut(QApplication::translate("MainWindow", "Shift+G", 0, QApplication::UnicodeUTF8));
         action_Exit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'savescore.ui'
 **
-** Created: Tue Nov 9 12:26:59 2010
+** Created: Tue Nov 9 21:39:59 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -49,6 +49,7 @@ public:
         congrats = new QLabel(SaveScore);
         congrats->setObjectName(QString::fromUtf8("congrats"));
         congrats->setGeometry(QRect(40, 30, 301, 81));
+        congrats->setWordWrap(true);
 
         retranslateUi(SaveScore);
 
@@ -57,9 +58,9 @@ public:
 
     void retranslateUi(QDialog *SaveScore)
     {
-        SaveScore->setWindowTitle(QApplication::translate("SaveScore", "Dialog", 0, QApplication::UnicodeUTF8));
+        SaveScore->setWindowTitle(QApplication::translate("SaveScore", "Winner!!!!", 0, QApplication::UnicodeUTF8));
         name_label->setText(QApplication::translate("SaveScore", "Name", 0, QApplication::UnicodeUTF8));
-        congrats->setText(QApplication::translate("SaveScore", "Congratulations!", 0, QApplication::UnicodeUTF8));
+        congrats->setText(QApplication::translate("SaveScore", "Congratulations! You have won Minesweeper, please enter your name!", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

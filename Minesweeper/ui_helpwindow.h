@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'helpwindow.ui'
 **
-** Created: Tue Nov 9 12:26:59 2010
+** Created: Tue Nov 9 21:39:59 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -47,7 +47,7 @@ public:
         label_2 = new QLabel(HelpWindow);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(350, 50, 61, 61));
-        label_2->setPixmap(QPixmap(QString::fromUtf8("awesome_face.png")));
+        label_2->setPixmap(QPixmap(QString::fromUtf8(":/images/awesome_face.png")));
 
         retranslateUi(HelpWindow);
         QObject::connect(buttonBox, SIGNAL(accepted()), HelpWindow, SLOT(accept()));

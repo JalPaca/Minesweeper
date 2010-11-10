@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutwindow.ui'
 **
-** Created: Tue Nov 9 17:57:50 2010
+** Created: Tue Nov 9 21:39:59 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,7 +41,7 @@ public:
         label_2 = new QLabel(AboutWindow);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(0, 270, 341, 161));
-        label_2->setPixmap(QPixmap(QString::fromUtf8("pink_unicorn.png")));
+        label_2->setPixmap(QPixmap(QString::fromUtf8(":/images/pink_unicorn.png")));
         okButton = new QDialogButtonBox(AboutWindow);
         okButton->setObjectName(QString::fromUtf8("okButton"));
         okButton->setGeometry(QRect(120, 330, 176, 27));
