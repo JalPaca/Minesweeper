@@ -11,3 +11,4 @@ Makefile*
 Makefile*
 moc_*.cpp
 moc_*.h
+scores.sqlite

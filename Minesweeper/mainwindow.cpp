@@ -84,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) :
             //Actually add the button to the container
             ui->mineContainer->addWidget(button, i, j);
             QString coordinates = QString::number(i)+","+QString::number(j); //Coordinate of the button
-
             //Map the coordinates to a particular MineSweeperButton
             signalMapper->setMapping(button, coordinates);
             signalMapper2->setMapping(button, coordinates);
@@ -201,16 +200,6 @@ void MainWindow::revealCell(QString coordinates)
         cellsRevealed++;
     }
 
-    //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
-    if (cellsRevealed == 90 && game->getValue(row, column) != MINE)
-    {
-        won();
-        return;
-    }
-
-    //Get the button we just pushed
-    MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
-
     //If it is flagged, we will ignore the mine
     if ( mineStatus[row][column] == FLAGGED_CELL || mineStatus[row][column] == QUESTION_CELL )
     {
@@ -218,11 +207,23 @@ void MainWindow::revealCell(QString coordinates)
             return;
     }
 
+    //Get the button we just pushed
+    MineSweeperButton *buttonPushed = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
+
+
     //If it is flat.. we already pushed it so ignore it
     if (buttonPushed->isFlat())
     {
             cellsRevealed--;
             return;
+    }
+
+    //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
+    if (cellsRevealed == 90 && game->getValue(row, column) != MINE)
+    {
+        changeIcon(buttonPushed, row, column);
+        won();
+        return;
     }
 
     //Recrusively clear the squares if we reveal a zero
