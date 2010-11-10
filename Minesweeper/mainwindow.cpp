@@ -322,6 +322,14 @@ void MainWindow::clear(int row, int column, bool allowedClear)
 
         cellsRevealed++;
 
+        //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
+        if (cellsRevealed == 90 && game->getValue(row, column) != MINE)
+        {
+            changeIcon(buttonPushed, row, column);
+            won();
+            return;
+        }   // in case clearing occurs in the end of the game.
+
         //Make sure that we are allowed to clear
         if ( game->getValue (row, column) == 0)
             allowedClear = true;

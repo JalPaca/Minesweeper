@@ -51,8 +51,8 @@
    <string>Minesweeper</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
-    <normaloff>:/images/mine_flat_button.png</normaloff>:/images/mine_flat_button.png</iconset>
+   <iconset>
+    <normaloff>images/mine_logo.png</normaloff>images/mine_logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -157,7 +157,7 @@
      <x>0</x>
      <y>0</y>
      <width>329</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -244,9 +244,7 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="images.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>action_Exit</sender>
