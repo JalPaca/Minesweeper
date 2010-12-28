@@ -1,7 +1,9 @@
 ﻿
 == Minesweeper
-Stephen Liang (sliang6)
-Aisha Halim (ahalim4)
+This minesweeper program was created under the GNU General Public License Version 3.
+
+* Stephen Liang (sliang6)
+* Aisha Halim (ahalim4)
 
 Welcome to our Minesweeper game. In this readme file, we will discuss the data structures and algorithms within the game that we have created. We suppose you know all about how Minesweeper works (if you don't, check the Help dialog in game.) 
 
@@ -64,3 +66,11 @@ HelpWindow simply shows information about how to play MineSweeper.
 === Conclusions:
 
 Overall, this game was a great introduction to learning about the Qt framework. The experience was pleasant through the use of the git version control software and working in the group was a pleasant experience. We hope you enjoy playing Minesweeper!
+
+==== Errata:
+
+The pink unicorn picture for the help window is from Wikimedia Commons. The link: http://ast.wikipedia.org/wiki/Archivu:Invisible_Pink_Unicorn.svg
+
+All other icon images were produced by us on Inkscape, and fall under the GP v 3 license.
+
+Contact us with any other issues through GitHub. Enjoy!
