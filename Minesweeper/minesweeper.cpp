@@ -7,7 +7,6 @@
  */
 #include "minesweeper.h"
 #include <QtGlobal>
-#include <ctime>
 
 /**
   * Constructor
@@ -41,8 +40,6 @@ Minesweeper::~Minesweeper()
   */
 void Minesweeper::generateBoard()
 {
-    /* initialize random seed: */
-    qsrand (time(NULL));
     //Generate ten mines and create its adjacent number list
     for( int i = 0; i < 10; i++)
     {
