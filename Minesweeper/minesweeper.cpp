@@ -42,15 +42,15 @@ void Minesweeper::generateBoard()
     /* initialize random seed: */
     qsrand (time(NULL));
     //Generate ten mines and create its adjacent number list
-    for( int i = 0; i < 10; i++)
+    for( int i = 0; i < mineNumber; i++)
     {
         int row, column;
 
         //Prevent generating mine on another mine
         do
         {
-            row = qrand() % 10;
-            column = qrand() % 10;
+            row = qrand() % gridSize;
+            column = qrand() % gridSize;
         }while (mineBoard[row][column] == MINE);
 
         mineBoard[row][column] = MINE; //Number 9 indiciates a mine
