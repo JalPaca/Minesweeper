@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
     //Now handle the actual game.. enough of this extra feature stuff. Now for the real deal!
-    game = new Minesweeper();
+    game = new Minesweeper(10,10);
 
     //We will need to map the click to an object's coordinates
     signalMapper = new QSignalMapper(this);
@@ -428,7 +428,7 @@ void MainWindow::reset() {
     ui->smileyFace->setIcon(QIcon(":/images/normal_face.png"));
 
     //Create a new game object
-    game = new Minesweeper();
+    game = new Minesweeper(10,10);
 
     //Go through all the cells and reset the icons
     for( int i = 0; i < 10; i++)

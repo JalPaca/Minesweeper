@@ -13,16 +13,14 @@
   * Constructor
   * Initializes the board
   */
-Minesweeper::Minesweeper()
+Minesweeper::Minesweeper(int gridSize,int mineNumber)
 {
+    this->gridSize = gridSize;
+    this->mineNumber = mineNumber;
     //Initialize board
-    for(int i = 0; i < 10; i++)
-    {
-        for ( int j = 0; j < 10; j++)
-        {
-            mineBoard[i][j] = 0;
-        }
-    }
+    mineBoard.resize(gridSize);
+    for (int i = 0; i < gridSize; ++i)
+      mineBoard[i].resize(gridSize);
 
     //Generates the board with mines and populates the number of mines around it
     generateBoard();
@@ -97,9 +95,9 @@ void Minesweeper::generateBoard()
 bool Minesweeper::isMine(int row, int column)
 {
         //Ensure the input is sanitary
-        if ( row < 0 || row > 9)
+        if ( row < 0 || row > (gridSize - 1))
             qFatal("Error in input");
-        if ( column < 0 || column > 9)
+        if ( column < 0 || column > (gridSize - 1))
             qFatal("Error in input");
 
         return mineBoard[row][column] == MINE;
@@ -115,9 +113,9 @@ bool Minesweeper::isMine(int row, int column)
 int Minesweeper::getValue(int row, int column)
 {
     //Ensure the input is sanitary
-    if ( row < 0 || row > 9)
+    if ( row < 0 || row > (gridSize - 1))
         qFatal("Error in input");
-    if ( column < 0 || column > 9)
+    if ( column < 0 || column > (gridSize - 1))
         qFatal("Error in input");
 
     return mineBoard[row][column];

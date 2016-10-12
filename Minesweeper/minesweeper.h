@@ -12,13 +12,13 @@
 class Minesweeper
 {
 public:
-    Minesweeper();
+    Minesweeper(int gridSize, int mineNumber);
     ~Minesweeper();
     bool isMine(int, int);
     int getValue(int, int);
 private:
     void generateBoard();
-    int mineBoard[10][10];
+    std::vector<std::vector<int> > mineBoard;
 };
 
 #endif // MINESWEEPER_H
