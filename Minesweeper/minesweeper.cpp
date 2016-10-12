@@ -71,16 +71,16 @@ void Minesweeper::generateBoard()
         if ( (column -1) != -1 && mineBoard[row][column-1] != MINE)
             mineBoard[row][column-1]++;
         //Right
-        if ( (column + 1) != 10 && mineBoard[row][column+1] != MINE)
+        if ( (column + 1) != gridSize && mineBoard[row][column+1] != MINE)
             mineBoard[row][column+1]++;
         //Bottom left
-        if ( (row+1) != 10 && (column -1) != -1 && mineBoard[row+1][column-1] != MINE)
+        if ( (row+1) != gridSize && (column -1) != -1 && mineBoard[row+1][column-1] != MINE)
             mineBoard[row+1][column-1]++;
         //Bottom center
-        if ( (row+1) != 10 && mineBoard[row+1][column] != MINE)
+        if ( (row+1) != gridSize && mineBoard[row+1][column] != MINE)
             mineBoard[row+1][column]++;
         //Bottom right
-        if ( (row+1) != 10 && (column+1) != 10 && mineBoard[row+1][column+1] != MINE)
+        if ( (row+1) != gridSize && (column+1) != gridSize && mineBoard[row+1][column+1] != MINE)
             mineBoard[row+1][column+1]++;
     }
 }
