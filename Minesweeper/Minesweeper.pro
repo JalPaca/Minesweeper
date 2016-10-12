@@ -1,6 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-10-28T13:39:17
 # -------------------------------------------------
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += sql
 TARGET = Minesweeper
 TEMPLATE = app
