@@ -27,7 +27,7 @@ void MineSweeperButton::mousePressEvent(QMouseEvent *qMEvent)
     //Did we right click?
     if ( qMEvent->button() == Qt::RightButton )
     {
- //       emit rightButtonClicked();
+        emit rightButtonClicked();
     }
 
     //Do default behavior otherwise

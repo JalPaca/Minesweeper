@@ -6,22 +6,21 @@
  * Created for CS 340 Fall 2010 - Professor Troy
  */
 #include "minesweeper.h"
-#include <QtGlobal>
 #include <ctime>
+#include <QtGlobal>
 
 /**
   * Constructor
   * Initializes the board
   */
-Minesweeper::Minesweeper(int gridSize,int mineNumber)
+Minesweeper::Minesweeper(int gridSize, int numberOfMines)
 {
     this->gridSize = gridSize;
-    this->mineNumber = mineNumber;
+    this->numberOfMines = numberOfMines;
     //Initialize board
     mineBoard.resize(gridSize);
     for (int i = 0; i < gridSize; ++i)
-      mineBoard[i].resize(gridSize);
-
+        mineBoard[i].resize(gridSize);
     //Generates the board with mines and populates the number of mines around it
     generateBoard();
 }
@@ -42,15 +41,15 @@ void Minesweeper::generateBoard()
     /* initialize random seed: */
     qsrand (time(NULL));
     //Generate ten mines and create its adjacent number list
-    for( int i = 0; i < 10; i++)
+    for( int i = 0; i < numberOfMines; i++)
     {
         int row, column;
 
         //Prevent generating mine on another mine
         do
         {
-            row = qrand() % 10;
-            column = qrand() % 10;
+            row = qrand() % gridSize;
+            column = qrand() % gridSize;
         }while (mineBoard[row][column] == MINE);
 
         mineBoard[row][column] = MINE; //Number 9 indiciates a mine
@@ -65,7 +64,7 @@ void Minesweeper::generateBoard()
         if ( (row-1) != -1 && mineBoard[row-1][column] != MINE)
             mineBoard[row-1][column]++;
         //Top right
-        if ( (row-1) != -1 && (column + 1) != 10 && mineBoard[row-1][column+1] != MINE)
+        if ( (row-1) != -1 && (column + 1) != gridSize && mineBoard[row-1][column+1] != MINE)
             mineBoard[row-1][column+1]++;
         //Left
         if ( (column -1) != -1 && mineBoard[row][column-1] != MINE)

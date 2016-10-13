@@ -11,7 +11,7 @@
 #define BLANK_CELL 0
 #define FLAGGED_CELL 1
 #define QUESTION_CELL 2
-#define MINE 9
+//#define MINE 9
 
 #include <iostream>
 #include <QMainWindow>
@@ -49,7 +49,8 @@ private:
     void lost();
     void won();
     void clear(int, int, bool);
-    int mineStatus[10][10];
+    //int mineStatus[10][10];
+    std::vector<std::vector<int> > mineStatus;
     void changeIcon(MineSweeperButton*, int, int);
 
 private slots:

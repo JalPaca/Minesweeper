@@ -7,18 +7,22 @@
 
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
+#include <vector>
+
 #define MINE 9
 
 class Minesweeper
 {
 public:
-    Minesweeper(int gridSize, int mineNumber);
+    Minesweeper(int gridSize, int numberOfMines);
     ~Minesweeper();
     bool isMine(int, int);
     int getValue(int, int);
 private:
-    void generateBoard();
     std::vector<std::vector<int> > mineBoard;
+    void generateBoard();
+    int gridSize;
+    int numberOfMines;
 };
 
 #endif // MINESWEEPER_H
