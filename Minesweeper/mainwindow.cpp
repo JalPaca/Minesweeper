@@ -17,8 +17,9 @@
 #include <QTimer>
 #include <QDebug>
 
-int gridSize = 20;
-int numberOfMines = 100;
+int gridHeight = 30;
+int gridWidth = 50;
+int numberOfMines = 50;
 
 /**
   * Constructor for MainWindow. It will initialize the entire board and create the necessary starting elements for the game
@@ -50,9 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Initialize statuses
     // 0 = Empty, 1 = flagged, 2 = ?
-    this->mineStatus.resize(gridSize);
-    for (int i = 0; i < gridSize; ++i)
-        this->mineStatus[i].resize(gridSize);
+    this->mineStatus.resize(gridHeight);
+    for (int i = 0; i < gridHeight; ++i)
+        this->mineStatus[i].resize(gridWidth);
 
     //Connect the UI elements
     connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(handleHelpButton()));
@@ -63,16 +64,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
     //Now handle the actual game.. enough of this extra feature stuff. Now for the real deal!
-    game = new Minesweeper(gridSize,numberOfMines);
+    game = new Minesweeper(gridWidth,gridHeight,numberOfMines);
 
     //We will need to map the click to an object's coordinates
     signalMapper = new QSignalMapper(this);
     signalMapper2 = new QSignalMapper(this);
 
     //Generate all the buttons for the game
-    for( int i = 0; i < gridSize; i++)
+    for( int i = 0; i < gridHeight; i++)
     {
-        for( int j = 0; j < gridSize; j++ )
+        for( int j = 0; j < gridWidth; j++ )
         {
             MineSweeperButton* button = new MineSweeperButton("");
 
@@ -99,8 +100,8 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    this->setMaximumHeight(20*gridSize);
-     this->setMaximumWidth(20*gridSize);
+    this->setMaximumHeight(20*gridHeight);
+     this->setMaximumWidth(20*gridWidth);
     //this->adjustSize();
     //Connect the signal mapper to this class so that we can handle its clicks
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(revealCell(QString))); //Left click
@@ -225,7 +226,7 @@ void MainWindow::revealCell(QString coordinates)
     }
 
     //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
-    if (cellsRevealed == (gridSize*gridSize - numberOfMines) && game->getValue(row, column) != MINE)
+    if (cellsRevealed == (gridHeight*gridWidth - numberOfMines) && game->getValue(row, column) != MINE)
     {
         changeIcon(buttonPushed, row, column);
         won();
@@ -329,7 +330,7 @@ void MainWindow::clear(int row, int column, bool allowedClear)
         cellsRevealed++;
 
         //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
-        if (cellsRevealed == (gridSize*gridSize - numberOfMines) && game->getValue(row, column) != MINE)
+        if (cellsRevealed == (gridHeight*gridWidth - numberOfMines) && game->getValue(row, column) != MINE)
         {
             changeIcon(buttonPushed, row, column);
             won();
@@ -350,25 +351,23 @@ void MainWindow::clear(int row, int column, bool allowedClear)
         if ( (row-1) != -1)
             clear(row-1, column, allowedClear);
         //Top right
-        if ( (row-1) != -1 && (column + 1) != gridSize)
+        if ( (row-1) != -1 && (column + 1) != gridWidth)
             clear(row-1, column+1, allowedClear);
         //Left
         if ( (column -1) != -1)
             clear(row, column-1, allowedClear);
         //Right
-        if ( (column + 1) != gridSize)
+        if ( (column + 1) != gridWidth)
             clear(row, column+1, allowedClear);
         //Bottom left
-        if ( (row+1) != gridSize && (column -1) != -1)
+        if ( (row+1) != gridHeight && (column -1) != -1)
             clear(row+1, column-1, allowedClear);
         //Bottom center
-        if ( (row+1) != gridSize)
+        if ( (row+1) != gridHeight)
             clear(row+1, column, allowedClear);
         //Bottom right
-        if ( (row+1) != gridSize && (column+1) != gridSize)
-        {
+        if ( (row+1) != gridHeight && (column+1) != gridWidth)
             clear(row+1, column+1, allowedClear);
-        }
     }
 }
 
@@ -382,9 +381,9 @@ void MainWindow::lost() {
     hasFinished = true;
 
     //Go through all the cells and reveal all the mines
-    for ( int i = 0; i < gridSize; i++ )
+    for ( int i = 0; i < gridHeight; i++ )
     {
-        for ( int j = 0; j < gridSize; j++ )
+        for ( int j = 0; j < gridWidth; j++ )
         {
             //Get the coordinates and obtain the button
             QString coordinates = QString::number(i)+","+QString::number(j);
@@ -434,12 +433,12 @@ void MainWindow::reset() {
     ui->smileyFace->setIcon(QIcon(":/images/normal_face.png"));
 
     //Create a new game object
-    game = new Minesweeper(gridSize,numberOfMines);
+    game = new Minesweeper(gridWidth,gridHeight,numberOfMines);
 
     //Go through all the cells and reset the icons
-    for( int i = 0; i < gridSize; i++)
+    for( int i = 0; i < gridHeight; i++)
     {
-        for( int j = 0; j < gridSize; j++ )
+        for( int j = 0; j < gridWidth; j++ )
         {
             QString coordinates = QString::number(i)+","+QString::number(j);
             MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
@@ -466,9 +465,9 @@ void MainWindow::won()
     hasFinished = true;
 
     //Set all the mines to disarmed
-    for ( int i = 0; i < gridSize; i++ )
+    for ( int i = 0; i < gridHeight; i++ )
     {
-        for ( int j = 0; j < gridSize; j++ )
+        for ( int j = 0; j < gridWidth; j++ )
         {
             QString coordinates = QString::number(i)+","+QString::number(j);
             MineSweeperButton *button = qobject_cast<MineSweeperButton *>(signalMapper->mapping(coordinates));
