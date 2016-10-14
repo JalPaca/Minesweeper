@@ -14,14 +14,15 @@
 class Minesweeper
 {
 public:
-    Minesweeper(int gridSize, int numberOfMines);
+    Minesweeper(int gridWidth, int gridHeight, int numberOfMines);
     ~Minesweeper();
     bool isMine(int, int);
     int getValue(int, int);
 private:
     std::vector<std::vector<int> > mineBoard;
     void generateBoard();
-    int gridSize;
+    int gridWidth;
+    int gridHeight;
     int numberOfMines;
 };
 

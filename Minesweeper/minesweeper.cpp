@@ -13,14 +13,16 @@
   * Constructor
   * Initializes the board
   */
-Minesweeper::Minesweeper(int gridSize, int numberOfMines)
+Minesweeper::Minesweeper(int gridWidth, int gridHeight, int numberOfMines)
 {
-    this->gridSize = gridSize;
+    this->gridWidth = gridWidth;
+    this->gridHeight = gridHeight;
+
     this->numberOfMines = numberOfMines;
     //Initialize board
-    mineBoard.resize(gridSize);
-    for (int i = 0; i < gridSize; ++i)
-        mineBoard[i].resize(gridSize);
+    mineBoard.resize(gridHeight);
+    for (int i = 0; i < gridHeight; ++i)
+        mineBoard[i].resize(gridWidth);
     //Generates the board with mines and populates the number of mines around it
     generateBoard();
 }
@@ -40,47 +42,47 @@ void Minesweeper::generateBoard()
 {
     /* initialize random seed: */
     qsrand (time(NULL));
-    //Generate ten mines and create its adjacent number list
+    //Generate the mines and create its adjacent number list
     for( int i = 0; i < numberOfMines; i++)
     {
         int row, column;
-
         //Prevent generating mine on another mine
         do
         {
-            row = qrand() % gridSize;
-            column = qrand() % gridSize;
-        }while (mineBoard[row][column] == MINE);
+            row    = qrand() % gridHeight;
+            column = qrand() % gridWidth;
 
-        mineBoard[row][column] = MINE; //Number 9 indiciates a mine
+        }while(mineBoard.at(row).at(column) == MINE); //Number 9 indiciates a mine
+
+        mineBoard.at(row).at(column) = MINE; //Number 9 indiciates a mine
 
         //Now that we have a mine created, increment its surroundings
         //There are eight of them
 
         //Top left
-        if ( (row-1) != -1 && (column -1) != -1 && mineBoard[row-1][column-1] != MINE)
-            mineBoard[row-1][column-1]++;
+        if ( (row-1) != -1 && (column -1) != -1 && mineBoard.at(row-1).at(column-1)!= MINE)
+            mineBoard.at(row-1).at(column-1)++;
         //Top center
-        if ( (row-1) != -1 && mineBoard[row-1][column] != MINE)
-            mineBoard[row-1][column]++;
+        if ( (row-1) != -1 && mineBoard.at(row-1).at(column) != MINE)
+            mineBoard.at(row-1).at(column)++;
         //Top right
-        if ( (row-1) != -1 && (column + 1) != gridSize && mineBoard[row-1][column+1] != MINE)
-            mineBoard[row-1][column+1]++;
+        if ( (row-1) != -1 && (column + 1) != gridWidth && mineBoard.at(row-1).at(column+1) != MINE)
+            mineBoard.at(row-1).at(column+1)++;
         //Left
-        if ( (column -1) != -1 && mineBoard[row][column-1] != MINE)
-            mineBoard[row][column-1]++;
+        if ( (column -1) != -1 && mineBoard.at(row).at(column-1) != MINE)
+            mineBoard.at(row).at(column-1)++;
         //Right
-        if ( (column + 1) != gridSize && mineBoard[row][column+1] != MINE)
-            mineBoard[row][column+1]++;
+        if ( (column + 1) != gridWidth && mineBoard.at(row).at(column+1) != MINE)
+            mineBoard.at(row).at(column+1)++;
         //Bottom left
-        if ( (row+1) != gridSize && (column -1) != -1 && mineBoard[row+1][column-1] != MINE)
-            mineBoard[row+1][column-1]++;
+        if ( (row+1) != gridHeight && (column -1) != -1 && mineBoard.at(row+1).at(column-1) != MINE)
+            mineBoard.at(row+1).at(column-1)++;
         //Bottom center
-        if ( (row+1) != gridSize && mineBoard[row+1][column] != MINE)
-            mineBoard[row+1][column]++;
+        if ( (row+1) != gridHeight && mineBoard.at(row+1).at(column) != MINE)
+            mineBoard.at(row+1).at(column)++;
         //Bottom right
-        if ( (row+1) != gridSize && (column+1) != gridSize && mineBoard[row+1][column+1] != MINE)
-            mineBoard[row+1][column+1]++;
+        if ( (row+1) != gridHeight && (column+1) != gridWidth && mineBoard.at(row+1).at(column+1) != MINE)
+            mineBoard.at(row+1).at(column+1)++;
     }
 }
 
@@ -94,12 +96,11 @@ void Minesweeper::generateBoard()
 bool Minesweeper::isMine(int row, int column)
 {
         //Ensure the input is sanitary
-        if ( row < 0 || row > (gridSize - 1))
+        if ( row < 0 || row > (gridHeight - 1))
             qFatal("Error in input");
-        if ( column < 0 || column > (gridSize - 1))
+        if ( column < 0 || column > (gridWidth - 1))
             qFatal("Error in input");
-
-        return mineBoard[row][column] == MINE;
+        return mineBoard.at(row).at(column) == MINE;
 }
 
 /**
@@ -112,10 +113,10 @@ bool Minesweeper::isMine(int row, int column)
 int Minesweeper::getValue(int row, int column)
 {
     //Ensure the input is sanitary
-    if ( row < 0 || row > (gridSize - 1))
+    if ( row < 0 || row > (gridHeight - 1))
         qFatal("Error in input");
-    if ( column < 0 || column > (gridSize - 1))
+    if ( column < 0 || column > (gridWidth - 1))
         qFatal("Error in input");
 
-    return mineBoard[row][column];
+    return mineBoard.at(row).at(column);
 }
