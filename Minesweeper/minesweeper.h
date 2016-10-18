@@ -18,8 +18,10 @@ public:
     ~Minesweeper();
     bool isMine(int, int);
     int getValue(int, int);
+    void safeClick(int,int);
 private:
     std::vector<std::vector<int> > mineBoard;
+    void fillSurroundings(int,int,bool);
     void generateBoard();
     int gridWidth;
     int gridHeight;

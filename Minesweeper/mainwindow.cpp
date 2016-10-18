@@ -17,9 +17,9 @@
 #include <QTimer>
 #include <QDebug>
 
-int gridHeight = 30;
-int gridWidth = 50;
-int numberOfMines = 50;
+int gridHeight = 16;
+int gridWidth = 16;
+int numberOfMines = 40;
 
 /**
   * Constructor for MainWindow. It will initialize the entire board and create the necessary starting elements for the game
@@ -79,10 +79,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
             //Button Styling
             button->setAttribute(Qt::WA_LayoutUsesWidgetRect); //Forces Mac OS X styled minesweeper to look like linux/windows
-            button->setMaximumHeight(20);
-            button->setMaximumWidth(20);
+            button->setMaximumHeight(30);
+            button->setMaximumWidth(30);
             button->setIcon (QIcon(QString(":/images/not_flat_button.png")));
-            button->setIconSize (QSize(20,20));
+            button->setIconSize (QSize(30,30));
             button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
             //Actually add the button to the container
@@ -100,9 +100,9 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    this->setMaximumHeight(20*gridHeight);
-     this->setMaximumWidth(20*gridWidth);
-    //this->adjustSize();
+    this->setMaximumHeight(30*gridHeight);
+    this->setMaximumWidth(30*gridWidth);
+
     //Connect the signal mapper to this class so that we can handle its clicks
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(revealCell(QString))); //Left click
     connect(signalMapper2, SIGNAL(mapped(QString)), this, SLOT(hasRightClicked(QString))); //Right click
@@ -197,6 +197,13 @@ void MainWindow::revealCell(QString coordinates)
     int row = results.at(0).toInt();
     int column = results.at(1).toInt();
 
+
+    // The first click in Minesweeper is always safe
+    if ( !hasStarted )
+    {
+        game->safeClick(row,column);
+    }
+
     //If we already finished the game.. we won't do anything here
     if (hasFinished)
     {
@@ -225,7 +232,7 @@ void MainWindow::revealCell(QString coordinates)
             return;
     }
 
-    //If we have 90 cells revealed (10 mines, 90 not mines), we win the game!
+    //If we have (gridHeight*gridWidth - numberOfMines) cells revealed (numberOfMines mines, gridHeight*gridWidth not mines), we win the game!
     if (cellsRevealed == (gridHeight*gridWidth - numberOfMines) && game->getValue(row, column) != MINE)
     {
         changeIcon(buttonPushed, row, column);
@@ -255,11 +262,14 @@ void MainWindow::revealCell(QString coordinates)
         ui->smileyFace->setIcon(QIcon(":/images/normal_face.png"));
     }
 
+
     //If we haven't started yet, let's start the counter
     if ( !hasStarted )
     {
+        //game->safeClick(row,column);
         timer->start(1000);
         hasStarted = true;
+
     }
 }
 
